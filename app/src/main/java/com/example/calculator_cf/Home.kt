@@ -32,14 +32,12 @@ class Home : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.Exit.setOnClickListener(){exit_app()}
-
-    }
-
-    private fun exit_app() {
+        binding.Exit.setOnClickListener {viewModel.exit_app()}
+        binding.GoGetName.setOnClickListener {viewModel.go_GetName()}
 
     }
+
+
 
 
     companion object {
