@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/getName">
+    app:startDestination="@id/home2">
 
     <fragment
-        android:id="@+id/getName"
-        android:name="com.example.calculator_cf.GetName"
-        android:label="fragment_get_name"
-        tools:layout="@layout/fragment_get_name" />
+        android:id="@+id/home2"
+        android:name="com.example.calculator_cf.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+
+
 </navigation>
