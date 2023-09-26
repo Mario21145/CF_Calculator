@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Calculator_CF</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Welcome_text">Calcola il tuo codice fiscale</string>
+    <string name="Go_Button">vai</string>
+    <string name="Exit">esci</string>
 </resources>
