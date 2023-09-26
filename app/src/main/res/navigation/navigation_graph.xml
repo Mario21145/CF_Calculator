@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/getName">
 
+    <fragment
+        android:id="@+id/getName"
+        android:name="com.example.calculator_cf.GetName"
+        android:label="fragment_get_name"
+        tools:layout="@layout/fragment_get_name" />
 </navigation>
