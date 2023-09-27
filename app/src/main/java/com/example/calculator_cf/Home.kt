@@ -35,7 +35,7 @@ class Home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.Exit.setOnClickListener {viewModel.exit_app()}
-        binding.GoGetName.setOnClickListener { findNavController().navigate(R.id.action_home_to_getName)}
+        binding.GoGetName.setOnClickListener { findNavController().navigate(R.id.action_home_to_getName) }
 
     }
 

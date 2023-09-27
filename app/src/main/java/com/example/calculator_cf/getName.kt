@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
 
 private const val ARG_PARAM1 = "param1"
@@ -15,13 +14,12 @@ private const val ARG_PARAM2 = "param2"
 class getName : Fragment() {
 
     private val viewModel: AppViewModel by viewModels()
-    private lateinit var binding : FragmentGetNameBinding
-
+    private lateinit var binding: FragmentGetNameBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //Nothing to do
+
         }
     }
 
@@ -29,9 +27,28 @@ class getName : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentGetNameBinding.inflate(inflater , container , false)
+        binding = FragmentGetNameBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val button = binding.buttonName
+        val name = binding.editTextText.text.toList()
+
+        button.setOnClickListener {
+            viewModel.check_Consonants_And_Vocals(name)
+        }
+
+
+
+    }
+
+
+
+
+
 
     companion object {
         @JvmStatic
