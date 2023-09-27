@@ -1,16 +1,30 @@
 package com.example.calculator_cf
 
-import android.view.LayoutInflater
+import android.app.Activity
+import android.util.Log
+import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import com.example.calculator_cf.databinding.FragmentHomeBinding
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.calculator_cf.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
 class AppViewModel : ViewModel() {
 
-//Fragment_Home Logic
-fun exit_app(){
+    //Logic Home exitProcess(0)
+   fun exit_app() {
+       System.exit(0)
+   }
+
+
+
+
+
+
+
+
+
 
 }
 
-
-
-}
