@@ -14,7 +14,7 @@ import com.example.calculator_cf.databinding.FragmentHomeBinding
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var navController: NavController
+    private lateinit var navController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         var navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         val navController = navHostFragment?.findNavController()
-        //Log.d("navcontroller" , "$navController")
+
+
     }
+
+
 
 
 
