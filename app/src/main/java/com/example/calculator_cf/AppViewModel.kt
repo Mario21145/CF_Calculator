@@ -17,7 +17,7 @@ class AppViewModel : ViewModel() {
        System.exit(0)
    }
 
-
+   var text = "prova"
 
 
 
