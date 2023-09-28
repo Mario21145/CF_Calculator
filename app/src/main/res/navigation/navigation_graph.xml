@@ -11,23 +11,23 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_home_to_getName"
-            app:destination="@id/getName" />
+            android:id="@+id/action_home_to_getSurname"
+            app:destination="@id/getSurname" />
     </fragment>
     <fragment
         android:id="@+id/getName"
         android:name="com.example.calculator_cf.getName"
         android:label="fragment_get_name"
-        tools:layout="@layout/fragment_get_name" >
-        <action
-            android:id="@+id/action_getName_to_getSurname"
-            app:destination="@id/getSurname" />
-    </fragment>
+        tools:layout="@layout/fragment_get_name" />
     <fragment
         android:id="@+id/getSurname"
         android:name="com.example.calculator_cf.GetSurname"
         android:label="fragment_get_surname"
-        tools:layout="@layout/fragment_get_surname" />
+        tools:layout="@layout/fragment_get_surname" >
+        <action
+            android:id="@+id/action_getSurname_to_getName"
+            app:destination="@id/getName" />
+    </fragment>
 
 
 </navigation>

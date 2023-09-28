@@ -1,6 +1,8 @@
 package com.example.calculator_cf
 
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +11,10 @@ import kotlin.reflect.typeOf
 class AppViewModel : ViewModel() {
 
     //LiveData CF
-    private val _liveCF = MutableLiveData("")
-    val final_result: LiveData<String>
-        get() = _liveCF
 
+    private var _liveCF = MutableLiveData("")
+    var live_CF: MutableLiveData<String> = MutableLiveData<String>("Testsss")
+        get() = _liveCF
 
     //Logic Home exitProcess(0)
     fun exit_app() {
@@ -21,7 +23,8 @@ class AppViewModel : ViewModel() {
     }
 
     //Logic getName
-    fun check_Consonants_And_Vocals(name: List<Char>): String {
+
+    fun check_Consonants_And_Vocals(name: List<Char>) : String{
 
         val consonants = listOf(
             'b',
@@ -50,25 +53,52 @@ class AppViewModel : ViewModel() {
 
         var char_result = mutableListOf<Char>()
 
-        for (Letter_Name in name) {
-            if (Letter_Name in consonants) {
+        for (letterName in name) {
+            if (letterName in consonants) {
 
-                char_result.add(Letter_Name)
+                char_result.add(letterName)
                 if (char_result.size == 3) {
                     break
                 }
 
-            } else if (Letter_Name in vocals){
-                char_result.add(Letter_Name)
-                    if (char_result.size == 3) {
-                        break
-                    }
+            } else if (letterName in vocals) {
+                char_result.add(letterName)
+                if (char_result.size == 3) {
+                    break
+                }
             }
         }
 
-        var final_result = char_result.joinToString("")
-        return final_result
+        var result = char_result.joinToString("")
+        return result
     }
+
+    fun checkIsEmpty(id : List<Char>) : Boolean{
+        if(id.isEmpty()){
+            return true
+        }
+            return false
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

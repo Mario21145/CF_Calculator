@@ -1,15 +1,24 @@
 package com.example.calculator_cf
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.text.set
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
+import org.w3c.dom.Text
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 class getName : Fragment() {
 
@@ -27,27 +36,70 @@ class getName : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentGetNameBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val button = binding.buttonName
-        val name = binding.editTextText.text.toList()
 
         button.setOnClickListener {
-            viewModel.check_Consonants_And_Vocals(name)
         }
+
+
+        binding.editTextText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Questo metodo viene chiamato prima che il testo venga modificato.
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                val name = binding.editTextText.text
+                Log.d("nome" , "$name")
+                val name_list = name.toList()
+                val result = viewModel.check_Consonants_And_Vocals(name_list)
+
+
+                if(viewModel.checkIsEmpty(name_list)){
+
+                } else {
+                    Log.d("result1" , "$result")
+                    viewModel.live_CF.value = viewModel.live_CF.value.plus(result)
+                    var ac = viewModel.live_CF.value
+                    Log.d("result" , "$ac")
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+                }
+
+
+            }
+            override fun afterTextChanged(s: Editable?) {
+                // Questo metodo viene chiamato dopo che il testo è stato modificato.
+            }
+        })
+
+
+
+
+
+
+        /*
+        binding.editTextText.setOnFocusChangeListener { state ,   hasFocus ->
+            if (hasFocus) {
+                viewModel.Live_CF.value = viewModel.Live_CF.value.plus(result)
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+            }
+        }
+        */
+
+
+
+
 
 
 
     }
-
-
-
-
 
 
     companion object {
@@ -55,8 +107,7 @@ class getName : Fragment() {
         fun newInstance(param1: String, param2: String) =
             getName().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }
