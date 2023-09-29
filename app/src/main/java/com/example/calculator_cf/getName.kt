@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
@@ -23,6 +24,9 @@ class getName : Fragment() {
 
     private val viewModel: AppViewModel by viewModels()
     private lateinit var binding: FragmentGetNameBinding
+    private lateinit var result : String
+    private lateinit var name_list : List<Char>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,34 +44,32 @@ class getName : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val button = binding.buttonName
-
-        button.setOnClickListener {
-        }
+        val button_name = binding.buttonName
 
         binding.editTextText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val name = binding.editTextText.text
-                Log.d("nome", "$name")
-                val name_list = name.toList()
-                val result = viewModel.check_Consonants_And_Vocals(name_list)
+                val nameLowerCase = name.map { it.lowercaseChar() }
+                name_list = nameLowerCase.toList()
+                result = viewModel.check_Consonants_And_Vocals(name_list)
 
-                if (viewModel.checkIsEmpty(name_list)) {
-
-                } else {
-                    viewModel.live_CF.value = viewModel.live_CF.value.plus(result)
-                    var ac = viewModel.live_CF.value
-                    Log.d("result", "$ac")
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+                if(name_list.isNotEmpty()) {
+                    viewModel.live_CF.value = viewModel.live_CF.value + result
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result )
                 }
             }
             override fun afterTextChanged(s: Editable?) {
             }
         })
+
+
+        button_name.setOnClickListener {
+        }
 
     }
 

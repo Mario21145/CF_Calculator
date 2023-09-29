@@ -14,8 +14,12 @@ class AppViewModel : ViewModel() {
     //LiveData CF
 
     private var _liveCF = MutableLiveData("")
-    var live_CF: MutableLiveData<String> = MutableLiveData<String>()
+    val live_CF: MutableLiveData<String>
         get() = _liveCF
+
+    private var _currentCF = MutableLiveData("")
+    var currentCF = MutableLiveData("")
+        get() = _currentCF
 
     //Logic Home exitProcess(0)
     fun exit_app() {
@@ -92,29 +96,31 @@ class AppViewModel : ViewModel() {
             }
         }
 
-
         var result = char_result.joinToString("")
-        return result
-
-    }
 
 
+        if(live_CF.value!!.isEmpty()){
+            live_CF.value = result
+        } else {
+            live_CF.value = live_CF.value + result
 
 
-
-    fun updateLiveData() {
-
-    }
-
-
-    fun checkIsEmpty(id: List<Char>): Boolean {
-        if (id.isEmpty()) {
-            return true
         }
-        return false
+
+        return result
     }
 
 
+    fun UpdateLiveData(){
+
+    }
+
+
+
+
+    
+
+    
 }
 
 

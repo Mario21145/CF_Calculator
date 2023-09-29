@@ -26,14 +26,16 @@
                 android:id="@+id/Live_CF_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/CF_live_Data(AppViewModel.live_CF)}"
+                android:text="@{@string/CF_live_Data(AppViewModel.live_CF)"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/editTextText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.449" />
+                app:layout_constraintVertical_bias="0.449"
+                tools:text="@string/CF_live_Data"
+                />
 
             <EditText
                 android:id="@+id/editTextText"
@@ -48,7 +50,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
 
             <Button
                 android:id="@+id/button_name"

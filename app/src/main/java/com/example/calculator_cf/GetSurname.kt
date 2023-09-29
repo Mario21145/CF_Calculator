@@ -10,13 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetSurnameBinding
 
 class GetSurname : Fragment() {
 
-    private val ViewModel: AppViewModel by viewModels()
+    private val viewModel: AppViewModel by viewModels()
     private lateinit var binding : FragmentGetSurnameBinding
+    private lateinit var result : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +35,8 @@ class GetSurname : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var button_surname = binding.buttonSurname
-        button_surname.setOnClickListener(){ findNavController().navigate(R.id.action_getSurname_to_getName) }
 
+        var button_surname = binding.buttonSurname
 
 
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
@@ -45,22 +46,14 @@ class GetSurname : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val surname = binding.editTextSurname.text
-                Log.d("cognome", "$surname")
-                val surname_list = surname.toList()
-                val result = ViewModel.check_Consonants_And_Vocals(surname_list)
+                val surnameLowerCase = surname.map { it.lowercaseChar() }
+                val surname_list = surnameLowerCase.toList()
+                result = viewModel.check_Consonants_And_Vocals(surname_list)
 
-                if (ViewModel.checkIsEmpty(surname_list)) {
-                    ViewModel.live_CF.value = ViewModel.live_CF.value.plus(result)
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data)
-                } else {
-                    Log.d("result1", "$result")
-                    ViewModel.live_CF.value = ViewModel.live_CF.value.plus(result)
-                    var r = ViewModel.live_CF.value
-                    Log.d("result_surname", "$r")
+                if(surname_list.isNotEmpty()) {
+                    viewModel.live_CF.value = viewModel.live_CF.value + result
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                 }
-
-
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -68,15 +61,8 @@ class GetSurname : Fragment() {
         })
 
 
-
-
-
-
-
-
-
-
-
+        button_surname.setOnClickListener(){
+            findNavController().navigate(R.id.action_getSurname_to_getName) }
     }
 
 
