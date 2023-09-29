@@ -19,7 +19,6 @@ import com.example.calculator_cf.databinding.FragmentGetNameBinding
 import org.w3c.dom.Text
 
 
-
 class getName : Fragment() {
 
     private val viewModel: AppViewModel by viewModels()
@@ -32,13 +31,10 @@ class getName : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,58 +45,31 @@ class getName : Fragment() {
         button.setOnClickListener {
         }
 
-
         binding.editTextText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Questo metodo viene chiamato prima che il testo venga modificato.
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val name = binding.editTextText.text
-                Log.d("nome" , "$name")
+                Log.d("nome", "$name")
                 val name_list = name.toList()
                 val result = viewModel.check_Consonants_And_Vocals(name_list)
 
-
-                if(viewModel.checkIsEmpty(name_list)){
+                if (viewModel.checkIsEmpty(name_list)) {
 
                 } else {
-                    Log.d("result1" , "$result")
                     viewModel.live_CF.value = viewModel.live_CF.value.plus(result)
                     var ac = viewModel.live_CF.value
-                    Log.d("result" , "$ac")
+                    Log.d("result", "$ac")
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                 }
-
-
             }
             override fun afterTextChanged(s: Editable?) {
-                // Questo metodo viene chiamato dopo che il testo è stato modificato.
             }
         })
 
-
-
-
-
-
-        /*
-        binding.editTextText.setOnFocusChangeListener { state ,   hasFocus ->
-            if (hasFocus) {
-                viewModel.Live_CF.value = viewModel.Live_CF.value.plus(result)
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
-            }
-        }
-        */
-
-
-
-
-
-
-
     }
-
 
     companion object {
         @JvmStatic

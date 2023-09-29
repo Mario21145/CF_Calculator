@@ -4,6 +4,10 @@
     <string name="Go_Button">vai</string>
     <string name="Exit">esci</string>
 
+    <!--Dates-->
+    <string name="name">Inserire il nome</string>
+    <string name="surname">Inserire il cognome</string>
+
     <!--Live Data CF string-->
     <string name="CF_live_Data">Il tuo codice fiscale è: %s</string>
 
