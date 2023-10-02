@@ -1,18 +1,20 @@
 package com.example.calculator_cf
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
+import com.example.calculator_cf.databinding.FragmentGetNameBinding
 import com.example.calculator_cf.databinding.FragmentHomeBinding
+import androidx.navigation.fragment.findNavController
 
 class Home : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
     private val viewModel: AppViewModel by viewModels()
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,19 +27,15 @@ class Home : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.Exit.setOnClickListener(){exit_app()}
-
-    }
-
-    private fun exit_app() {
+        binding.Exit.setOnClickListener {viewModel.exit_app()}
+        binding.GoGetName.setOnClickListener { findNavController().navigate(R.id.action_home_to_getSurname) }
 
     }
 
@@ -56,7 +54,6 @@ class Home : Fragment() {
         fun newInstance(param1: String, param2: String) =
             Home().apply {
                 arguments = Bundle().apply {
-
                 }
             }
     }

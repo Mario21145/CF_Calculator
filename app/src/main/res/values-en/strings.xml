@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculator_CF</string>
+    <string name="Welcome_text">Calculate your tax id code</string>
+    <string name="Go_Button">go</string>
+    <string name="Exit">exit</string>
+    <string name="name">Insert the name</string>
+    <string name="CF_live_Data">Your tax id code is: %s</string>
+    <string name="surname">Insert the surname</string>
+</resources>

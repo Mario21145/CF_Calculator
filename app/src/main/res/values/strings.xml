@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Calculator_CF</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Calcolatore codice fiscale</string>
     <string name="Welcome_text">Calcola il tuo codice fiscale</string>
     <string name="Go_Button">vai</string>
     <string name="Exit">esci</string>
+
+    <!--Dates-->
+    <string name="name">Inserire il nome</string>
+    <string name="surname">Inserire il cognome</string>
+
+    <!--Live Data CF string-->
+    <string name="CF_live_Data">Il tuo codice fiscale è: %s</string>
+
 </resources>
