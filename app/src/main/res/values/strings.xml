@@ -7,8 +7,12 @@
     <!--Dates-->
     <string name="name">Inserire il nome</string>
     <string name="surname">Inserire il cognome</string>
+    <string name="date">Inserire l\'anno</string>
+    <string name="day">Inserire il giorno</string>
+
 
     <!--Live Data CF string-->
     <string name="CF_live_Data">Il tuo codice fiscale è: %s</string>
+
 
 </resources>

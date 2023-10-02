@@ -40,11 +40,7 @@ class GetSurname : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         var button_surname = binding.buttonSurname
-
-
-
 
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

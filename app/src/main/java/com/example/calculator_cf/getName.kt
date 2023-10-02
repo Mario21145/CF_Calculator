@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
 import org.w3c.dom.Text
 
@@ -72,6 +73,7 @@ class getName : Fragment() {
 
 
         button_name.setOnClickListener {
+            findNavController().navigate(R.id.action_getName_to_getDate)
             viewModel.UpdateLiveData(result)
         }
 

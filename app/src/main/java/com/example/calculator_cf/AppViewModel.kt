@@ -17,18 +17,32 @@ class AppViewModel : ViewModel() {
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
 
-    init {
-        this.live_CF.value = ""
-    }
-
-
     //Logic Home exitProcess(0)
     fun exit_app() {
         System.exit(0)
     }
 
-    //Logic getName
+    //Getter & Setter
+    private var _name = MutableLiveData("")
+    var name = _name
+    fun setName(name: String) {
+        _name.value = name
+    }
 
+    private var _surname = MutableLiveData("")
+    var surname = _surname
+    fun setSurname(surname: String) {
+        _surname.value = surname
+    }
+
+    private var _date = MutableLiveData("")
+    var date = _date
+    fun setDate(name: String) {
+        _name.value = name
+    }
+
+
+    //Logic getName
     fun getNameAndgetSurname(name: List<Char>): String {
         val consonants = listOf(
             'b',
@@ -115,8 +129,9 @@ class AppViewModel : ViewModel() {
     }
 
 
+    fun calcDate() {
 
-
+    }
 
 
 }
