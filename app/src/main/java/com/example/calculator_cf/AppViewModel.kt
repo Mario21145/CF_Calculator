@@ -14,22 +14,18 @@ class AppViewModel : ViewModel() {
     //LiveData CF
 
     private var _liveCF = MutableLiveData("")
-    val live_CF: MutableLiveData<String>
+    var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
 
-    private var _currentCF = MutableLiveData("")
-    var currentCF = MutableLiveData("")
-        get() = _currentCF
 
     //Logic Home exitProcess(0)
     fun exit_app() {
         System.exit(0)
-        //reset status 1
     }
 
     //Logic getName
 
-    fun check_Consonants_And_Vocals(name: List<Char>): String {
+    fun check_Consonants_And_Vocals(name: List<Char>) : String{
         val consonants = listOf(
             'b',
             'c',
@@ -99,20 +95,18 @@ class AppViewModel : ViewModel() {
         var result = char_result.joinToString("")
 
 
-        if(live_CF.value!!.isEmpty()){
-            live_CF.value = result
-        } else {
-            live_CF.value = live_CF.value + result
-
-
-        }
-
         return result
+
+
     }
 
 
-    fun UpdateLiveData(){
-
+    fun UpdateLiveData(result : String){
+        if(live_CF.value!!.isEmpty()){
+            live_CF.value = result
+        } else {
+            live_CF.value= live_CF.value.plus(result)
+        }
     }
 
 

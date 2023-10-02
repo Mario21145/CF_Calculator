@@ -19,14 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <!--@{@string/CF_live_Data(AppViewModel.live_CF)}-->
-
             <TextView
                 android:id="@+id/Live_CF_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/CF_live_Data(AppViewModel.live_CF)"
+                android:text="@{@string/CF_live_Data(AppViewModel.live_CF)}"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/editTextText"

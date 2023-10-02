@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -22,11 +23,10 @@ import org.w3c.dom.Text
 
 class getName : Fragment() {
 
-    private val viewModel: AppViewModel by viewModels()
+    private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetNameBinding
     private lateinit var result : String
     private lateinit var name_list : List<Char>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class getName : Fragment() {
 
         binding.editTextText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value )
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -59,8 +59,7 @@ class getName : Fragment() {
                 result = viewModel.check_Consonants_And_Vocals(name_list)
 
                 if(name_list.isNotEmpty()) {
-                    viewModel.live_CF.value = viewModel.live_CF.value + result
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result )
+                        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value )
                 }
             }
             override fun afterTextChanged(s: Editable?) {
@@ -69,6 +68,7 @@ class getName : Fragment() {
 
 
         button_name.setOnClickListener {
+            viewModel.UpdateLiveData(result)
         }
 
     }

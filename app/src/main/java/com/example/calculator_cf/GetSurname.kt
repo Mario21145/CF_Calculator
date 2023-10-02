@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,9 +17,10 @@ import com.example.calculator_cf.databinding.FragmentGetSurnameBinding
 
 class GetSurname : Fragment() {
 
-    private val viewModel: AppViewModel by viewModels()
+    private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding : FragmentGetSurnameBinding
     private lateinit var result : String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +38,9 @@ class GetSurname : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var button_surname = binding.buttonSurname
 
+
+        var button_surname = binding.buttonSurname
 
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -51,17 +54,15 @@ class GetSurname : Fragment() {
                 result = viewModel.check_Consonants_And_Vocals(surname_list)
 
                 if(surname_list.isNotEmpty()) {
-                    viewModel.live_CF.value = viewModel.live_CF.value + result
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-
         button_surname.setOnClickListener(){
+            viewModel.UpdateLiveData(result)
             findNavController().navigate(R.id.action_getSurname_to_getName) }
     }
 
