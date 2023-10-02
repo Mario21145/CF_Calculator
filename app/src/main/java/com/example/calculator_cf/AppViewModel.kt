@@ -17,6 +17,10 @@ class AppViewModel : ViewModel() {
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
 
+    init {
+        this.live_CF.value = ""
+    }
+
 
     //Logic Home exitProcess(0)
     fun exit_app() {
@@ -25,7 +29,7 @@ class AppViewModel : ViewModel() {
 
     //Logic getName
 
-    fun check_Consonants_And_Vocals(name: List<Char>) : String{
+    fun getNameAndgetSurname(name: List<Char>): String {
         val consonants = listOf(
             'b',
             'c',
@@ -75,18 +79,19 @@ class AppViewModel : ViewModel() {
 
         var maxLenghtChar = 3
 
-        if(!v.isEmpty()){
-            if(c.size != maxLenghtChar){
+        if (!v.isEmpty()) {
+            if (c.size != maxLenghtChar) {
                 //Log.d("position" , "$position")
-                when(c.size){
+                when (c.size) {
                     0 -> char_result = c.plus(v).toMutableList()
                     1 -> {
                         var i = 0
-                         while (i < 1){
-                             char_result =  c.plus(v[i]).toMutableList()
-                             i++
-                         }
+                        while (i < 1) {
+                            char_result = c.plus(v[i]).toMutableList()
+                            i++
+                        }
                     }
+
                     2 -> char_result = c.plus(v[0]).toMutableList()
                 }
             }
@@ -101,20 +106,19 @@ class AppViewModel : ViewModel() {
     }
 
 
-    fun UpdateLiveData(result : String){
-        if(live_CF.value!!.isEmpty()){
-            live_CF.value = result
+    fun UpdateLiveData(result: String) {
+        if (live_CF.value!!.isEmpty()) {
+            if (live_CF.value == _liveCF.value) _liveCF.value = result
         } else {
-            live_CF.value= live_CF.value.plus(result)
+            live_CF.value = live_CF.value.plus(result)
         }
     }
 
 
 
 
-    
 
-    
+
 }
 
 

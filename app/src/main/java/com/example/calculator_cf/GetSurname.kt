@@ -18,8 +18,8 @@ import com.example.calculator_cf.databinding.FragmentGetSurnameBinding
 class GetSurname : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
-    private lateinit var binding : FragmentGetSurnameBinding
-    private lateinit var result : String
+    private lateinit var binding: FragmentGetSurnameBinding
+    private lateinit var result: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,18 +29,22 @@ class GetSurname : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_surname, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         var button_surname = binding.buttonSurname
+
+
+
 
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -51,22 +55,27 @@ class GetSurname : Fragment() {
                 val surname = binding.editTextSurname.text
                 val surnameLowerCase = surname.map { it.lowercaseChar() }
                 val surname_list = surnameLowerCase.toList()
-                result = viewModel.check_Consonants_And_Vocals(surname_list)
+                result = viewModel.getNameAndgetSurname(surname_list)
 
-                if(surname_list.isNotEmpty()) {
+                if(surname.isNotEmpty()){
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-        button_surname.setOnClickListener(){
-            viewModel.UpdateLiveData(result)
-            findNavController().navigate(R.id.action_getSurname_to_getName) }
+        button_surname.setOnClickListener() {
+            var state = true
+            if(state){
+                viewModel.UpdateLiveData(result)
+                findNavController().navigate(R.id.action_getSurname_to_getName)
+                state = false
+            }
+
+        }
     }
-
-
 
 
     companion object {
