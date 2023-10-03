@@ -24,6 +24,7 @@ class getDate : Fragment() {
     private lateinit var binding: FragmentGetDateBinding
     private lateinit var result_date : String
     private lateinit var result_day : String
+    private lateinit var result_month : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,14 +89,15 @@ class getDate : Fragment() {
                 viewModel.setDate(day)
                 if(result_date == "Error"){
 
-                } else if(viewModel.date.value!!.isEmpty()){
-                    viewModel.setDate(day)
-                } else if(viewModel.date.value!!.isNotEmpty()){
+                } else if(viewModel.day.value!!.isEmpty()){
+                    viewModel.setDay(day)
+                    viewModel.setCF(result_day)
+                } else if(viewModel.day.value!!.isNotEmpty()){
+                    viewModel.setDay(day)
                     viewModel.setCF(result_day)
                 }
 
                 binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
-
 
             }
 
@@ -106,24 +108,28 @@ class getDate : Fragment() {
 
 
         //Spinner
-        val months = listOf(0
+        val months = listOf(
             "Gennaio", "Febbraio", "Marzo", "Aprile",
             "Maggio", "Giugno", "Luglio", "Agosto",
-            "Settembre", "Ottobre", "Novembre", "Dicembre" ,
+            "Settembre", "Ottobre", "Novembre", "Dicembre" , "mese"
         )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item , months)
         binding.month.adapter = adapter
+        binding.month.setSelection(12)
         binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val itemSelected = months[p2]
-                val result_month = viewModel.calcMonth(itemSelected)
+
+                var selectedMonth = months[p2]
+                val result_month = viewModel.calcMonth(selectedMonth)
 
 
-                if(result_month == "Error"){
+                if(result_month == "mese"){
 
                 } else if(viewModel.month.value!!.isEmpty()){
-                    viewModel.setMonth(itemSelected)
-                } else if(viewModel.month.value!!.isNotEmpty()){
+                    viewModel.setMonth(selectedMonth)
+                    viewModel.setCF(result_month)
+                } else {
+                    viewModel.setMonth(selectedMonth)
                     viewModel.setCF(result_month)
                 }
 
@@ -145,11 +151,11 @@ class getDate : Fragment() {
                 viewModel.showToast(requireContext() , "$msg" , 20)
             }
 
-            var name = viewModel.name.value
-            var surname = viewModel.surname.value
-            var date = viewModel.date.value
-            var day = viewModel.day.value
-            var month = viewModel.month.value
+            val name = viewModel.name.value
+            val surname = viewModel.surname.value
+            val date = viewModel.date.value
+            val day = viewModel.day.value
+            val month = viewModel.month.value
 
             Log.d("Variabili" , "nome: $name / cognome: $surname / anno: $date / giorno: $day / mese: $month  " )
 
