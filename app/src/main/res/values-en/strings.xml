@@ -5,6 +5,9 @@
     <string name="Go_Button">go</string>
     <string name="Exit">exit</string>
     <string name="name">Insert the name</string>
+    <string name="date">Insert the year</string>
+    <string name="day">Insert the day</string>
     <string name="CF_live_Data">Your tax id code is: %s</string>
     <string name="surname">Insert the surname</string>
+    <string name="Error_Date">Lenght not valid</string>
 </resources>

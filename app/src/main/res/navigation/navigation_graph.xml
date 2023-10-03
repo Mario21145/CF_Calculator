@@ -18,7 +18,11 @@
         android:id="@+id/getName"
         android:name="com.example.calculator_cf.getName"
         android:label="fragment_get_name"
-        tools:layout="@layout/fragment_get_name" />
+        tools:layout="@layout/fragment_get_name" >
+        <action
+            android:id="@+id/action_getName_to_getDate"
+            app:destination="@id/getDate" />
+    </fragment>
     <fragment
         android:id="@+id/getSurname"
         android:name="com.example.calculator_cf.GetSurname"
@@ -28,6 +32,10 @@
             android:id="@+id/action_getSurname_to_getName"
             app:destination="@id/getName" />
     </fragment>
+    <fragment
+        android:id="@+id/getDate"
+        android:name="com.example.calculator_cf.getDate"
+        android:label="getDate" />
 
 
 </navigation>
