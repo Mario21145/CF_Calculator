@@ -18,12 +18,23 @@ class AppViewModel : ViewModel() {
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
     fun setCF(parameter : String){
-        if(_liveCF == MutableLiveData(" ")){
+
+        var parameter = parameter
+
+        Log.d("p" , "$parameter")
+
+        if(_liveCF == MutableLiveData("")){
             _liveCF.value = parameter
+            Log.d("Caso vuoto" , "caso vuoto linea 28")
         } else {
              _liveCF.value = _liveCF.value + parameter
         }
+    }
 
+
+
+    init{
+       // _liveCF.value  =  "XXXXXXXXXXXXXXX"
     }
 
    /* fun UpdateLiveData(result: String) {
@@ -57,6 +68,20 @@ class AppViewModel : ViewModel() {
     fun setDate(date: String) {
         _date.value = date
     }
+
+    private var _month = MutableLiveData("")
+    var month = _month
+    fun setMonth(month : String){
+        _month.value = month
+    }
+
+    private var _day = MutableLiveData("")
+    var day = _day
+    fun setDay(day : String){
+        _day.value = day
+    }
+
+
 
     fun showToast(context: Context, msg: String, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, msg, duration).show()
@@ -155,16 +180,37 @@ class AppViewModel : ViewModel() {
         } else {
             return "Error"
         }
-
     }
 
-    fun calcDay(day: List<Char>){
-
+    fun calcMonth(month : String) : String {
+        when(month){
+            "mese" -> {return "mese"}
+            "Gennaio"-> {return "A"}
+            "Febbraio" -> {return "B"}
+            "Marzo" -> {return "C"}
+            "Aprile" -> {return "D"}
+            "Maggio" -> {return "E"}
+            "Giugno" -> {return "H"}
+            "Luglio" -> {return "L"}
+            "Agosto" -> {return "M"}
+            "Settembre" -> {return "P"}
+            "Ottobre" -> {return "R"}
+            "Novembre" -> {return "S"}
+            "Dicembre" -> {return "T"}
+            else -> {return "Error"}
+        }
     }
 
-    fun calcMonth(month : String){
+    fun calcDay(day: String) : String {
 
+        if(day.length == 2){
+            return day
+        }
+        return ""
     }
+
+
+
 
 }
 

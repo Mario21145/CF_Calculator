@@ -41,6 +41,8 @@ class GetSurname : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var button_surname = binding.buttonSurname
+        binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF)
+
 
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
