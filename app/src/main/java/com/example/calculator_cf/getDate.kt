@@ -22,8 +22,8 @@ class getDate : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetDateBinding
-    private lateinit var result: String
-
+    private lateinit var result_date : String
+    private lateinit var result_day : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +55,18 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val date = binding.date.text.toString()
-                result = viewModel.calcDate(date)
-               // viewModel.showToast(requireContext() , "" , 30)
+                result_date = viewModel.calcDate(date)
 
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result)
+                viewModel.setDate(date)
+                if(result_date == "Error"){
+
+                } else if(viewModel.date.value!!.isEmpty()){
+                    viewModel.setDate(date)
+                } else if(viewModel.date.value!!.isNotEmpty()){
+                    viewModel.setCF(result_date)
+                }
+
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
             }
 
@@ -73,10 +81,20 @@ class getDate : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val day = binding.day.text.toList()
-                viewModel.calcDay(day)
+                val day = binding.day.text.toString()
+                result_day = viewModel.calcDay(day)
 
-                //binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+
+                viewModel.setDate(day)
+                if(result_date == "Error"){
+
+                } else if(viewModel.date.value!!.isEmpty()){
+                    viewModel.setDate(day)
+                } else if(viewModel.date.value!!.isNotEmpty()){
+                    viewModel.setCF(result_day)
+                }
+
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
 
             }
@@ -88,18 +106,28 @@ class getDate : Fragment() {
 
 
         //Spinner
-        val months = listOf(
+        val months = listOf(0
             "Gennaio", "Febbraio", "Marzo", "Aprile",
             "Maggio", "Giugno", "Luglio", "Agosto",
-            "Settembre", "Ottobre", "Novembre", "Dicembre"
+            "Settembre", "Ottobre", "Novembre", "Dicembre" ,
         )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item , months)
         binding.month.adapter = adapter
         binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
                 val itemSelected = months[p2]
+                val result_month = viewModel.calcMonth(itemSelected)
 
+
+                if(result_month == "Error"){
+
+                } else if(viewModel.month.value!!.isEmpty()){
+                    viewModel.setMonth(itemSelected)
+                } else if(viewModel.month.value!!.isNotEmpty()){
+                    viewModel.setCF(result_month)
+                }
+
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -112,12 +140,19 @@ class getDate : Fragment() {
 
         button_date.setOnClickListener {
 
-            if(result == "Error"){
+            if(result_date == "Error"){
                 val msg = getString(R.string.Error_Date)
                 viewModel.showToast(requireContext() , "$msg" , 20)
             }
 
-            viewModel.setDate(binding.date.text.toString())
+            var name = viewModel.name.value
+            var surname = viewModel.surname.value
+            var date = viewModel.date.value
+            var day = viewModel.day.value
+            var month = viewModel.month.value
+
+            Log.d("Variabili" , "nome: $name / cognome: $surname / anno: $date / giorno: $day / mese: $month  " )
+
 
         }
 
