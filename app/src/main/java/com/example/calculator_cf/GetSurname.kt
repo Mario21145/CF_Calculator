@@ -49,11 +49,11 @@ class GetSurname : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val surname = binding.editTextSurname.text
-                val surnameLowerCase = surname.map { it.lowercaseChar() }
+                val surnameLowerCase = surname.map { it.uppercaseChar() }
                 val surname_list = surnameLowerCase.toList()
                 result = viewModel.getNameAndgetSurname(surname_list)
 
-                if(surname.isNotEmpty()){
+                if (surname.isNotEmpty()) {
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                 }
             }
@@ -63,13 +63,9 @@ class GetSurname : Fragment() {
         })
 
         button_surname.setOnClickListener() {
-            var state = true
-            if(state){
-                viewModel.UpdateLiveData(result)
-                findNavController().navigate(R.id.action_getSurname_to_getName)
-                state = false
-            }
-
+            findNavController().navigate(R.id.action_getSurname_to_getName)
+            viewModel.setCF(result)
+            viewModel.setSurname(binding.editTextSurname.text.toString())
         }
     }
 

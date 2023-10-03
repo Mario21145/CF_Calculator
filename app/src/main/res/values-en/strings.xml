@@ -9,4 +9,5 @@
     <string name="day">Insert the day</string>
     <string name="CF_live_Data">Your tax id code is: %s</string>
     <string name="surname">Insert the surname</string>
+    <string name="Error_Date">Lenght not valid</string>
 </resources>

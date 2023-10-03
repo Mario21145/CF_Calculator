@@ -56,7 +56,7 @@ class getName : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val name = binding.editTextText.text
-                val nameLowerCase = name.map { it.lowercaseChar() }
+                val nameLowerCase = name.map { it.uppercaseChar() }
                 name_list = nameLowerCase.toList()
                 result = viewModel.getNameAndgetSurname(name_list)
 
@@ -74,7 +74,8 @@ class getName : Fragment() {
 
         button_name.setOnClickListener {
             findNavController().navigate(R.id.action_getName_to_getDate)
-            viewModel.UpdateLiveData(result)
+            viewModel.setName(binding.editTextText.text.toString())
+            viewModel.setCF(result)
         }
 
     }

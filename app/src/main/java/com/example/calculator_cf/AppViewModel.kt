@@ -1,8 +1,10 @@
 package com.example.calculator_cf
 
+import android.content.Context
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +14,25 @@ import kotlin.reflect.typeOf
 class AppViewModel : ViewModel() {
 
     //LiveData CF
-
     private var _liveCF = MutableLiveData("")
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
+    fun setCF(parameter : String){
+        if(_liveCF == MutableLiveData(" ")){
+            _liveCF.value = parameter
+        } else {
+             _liveCF.value = _liveCF.value + parameter
+        }
+
+    }
+
+   /* fun UpdateLiveData(result: String) {
+        if (live_CF.value!!.isEmpty()) {
+            if (live_CF.value == _liveCF.value) _liveCF.value = result
+        } else {
+            live_CF.value = live_CF.value.plus(result)
+        }
+    }*/
 
     //Logic Home exitProcess(0)
     fun exit_app() {
@@ -37,37 +54,48 @@ class AppViewModel : ViewModel() {
 
     private var _date = MutableLiveData("")
     var date = _date
-    fun setDate(name: String) {
-        _name.value = name
+    fun setDate(date: String) {
+        _date.value = date
     }
+
+    fun showToast(context: Context, msg: String, duration: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(context, msg, duration).show()
+    }
+
+
+
+
+
+
+
 
 
     //Logic getName
     fun getNameAndgetSurname(name: List<Char>): String {
         val consonants = listOf(
-            'b',
-            'c',
-            'd',
-            'f',
-            'g',
-            'h',
-            'j',
-            'k',
-            'l',
-            'm',
-            'n',
-            'p',
-            'q',
-            'r',
-            's',
-            't',
-            'v',
-            'w',
-            'x',
-            'y',
-            'z'
+            'B',
+            'C',
+            'D',
+            'F',
+            'G',
+            'H',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z'
         )
-        val vocals = listOf('a', 'e', 'i', 'o', 'u')
+        val vocals = listOf('A', 'E', 'I', 'O', 'U')
 
         var char_result = mutableListOf<Char>()
         var c = mutableListOf<Char>()
@@ -120,19 +148,23 @@ class AppViewModel : ViewModel() {
     }
 
 
-    fun UpdateLiveData(result: String) {
-        if (live_CF.value!!.isEmpty()) {
-            if (live_CF.value == _liveCF.value) _liveCF.value = result
+    //GetDate Fragment
+    fun calcDate(date : String): String {
+        if(date.length == 4){
+            return date.takeLast(2)
         } else {
-            live_CF.value = live_CF.value.plus(result)
+            return "Error"
         }
-    }
-
-
-    fun calcDate() {
 
     }
 
+    fun calcDay(day: List<Char>){
+
+    }
+
+    fun calcMonth(month : String){
+
+    }
 
 }
 

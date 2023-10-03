@@ -10,6 +10,8 @@
     <string name="date">Inserire l\'anno</string>
     <string name="day">Inserire il giorno</string>
 
+    <!--Toast-->
+    <string name="Error_Date">Lunghezza non valida</string>
 
     <!--Live Data CF string-->
     <string name="CF_live_Data">Il tuo codice fiscale è: %s</string>
