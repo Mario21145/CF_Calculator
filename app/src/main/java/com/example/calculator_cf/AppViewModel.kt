@@ -18,7 +18,7 @@ class AppViewModel : ViewModel() {
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
 
-    fun setCF(parameter : String , case : String){
+    fun setCF(parameter : String){
 
         /*
         when(case){
@@ -33,7 +33,7 @@ class AppViewModel : ViewModel() {
             "date" -> {}
             "month" -> {}
             "day" -> {}
-            "townhall" -> {}
+            "city" -> {}
             "lastLetter" -> {}
 
         }*/
