@@ -44,7 +44,16 @@
         android:id="@+id/getSex"
         android:name="com.example.calculator_cf.getSex"
         android:label="fragment_get_sex"
-        tools:layout="@layout/fragment_get_sex" />
+        tools:layout="@layout/fragment_get_sex" >
+        <action
+            android:id="@+id/action_getSex_to_getCity"
+            app:destination="@id/getCity" />
+    </fragment>
+    <fragment
+        android:id="@+id/getCity"
+        android:name="com.example.calculator_cf.getCity"
+        android:label="fragment_get_city"
+        tools:layout="@layout/fragment_get_city" />
 
 
 </navigation>

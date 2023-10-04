@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetDateBinding
 import com.example.calculator_cf.databinding.FragmentGetSexBinding
 
@@ -52,6 +53,10 @@ class getSex : Fragment() {
             viewModel.setSex(text_women_radio)
             Log.d("sex" , "Il sesso selezionato è: ${viewModel.sex.value}")
             viewModel.setCF(text_women_radio)
+        }
+
+        binding.buttonSex.setOnClickListener(){
+            findNavController().navigate(R.id.action_getSex_to_getCity)
         }
 
 
