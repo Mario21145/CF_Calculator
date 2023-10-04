@@ -19,10 +19,6 @@ class AppViewModel : ViewModel() {
         get() = _liveCF
     fun setCF(parameter : String){
 
-        var parameter = parameter
-
-        Log.d("p" , "$parameter")
-
         if(_liveCF == MutableLiveData("")){
             _liveCF.value = parameter
             Log.d("Caso vuoto" , "caso vuoto linea 28")
@@ -81,6 +77,11 @@ class AppViewModel : ViewModel() {
         _day.value = day
     }
 
+    private var _sex = MutableLiveData("")
+    var sex = _sex
+    fun setSex(sex : String){
+        _sex.value = sex
+    }
 
 
     fun showToast(context: Context, msg: String, duration: Int = Toast.LENGTH_SHORT) {

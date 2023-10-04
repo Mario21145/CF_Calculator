@@ -151,6 +151,8 @@ class getDate : Fragment() {
                 viewModel.showToast(requireContext() , "$msg" , 20)
             }
 
+            findNavController().navigate(R.id.action_getDate_to_getSex)
+
             val name = viewModel.name.value
             val surname = viewModel.surname.value
             val date = viewModel.date.value
