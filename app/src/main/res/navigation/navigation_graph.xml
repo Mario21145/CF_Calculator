@@ -35,7 +35,16 @@
     <fragment
         android:id="@+id/getDate"
         android:name="com.example.calculator_cf.getDate"
-        android:label="getDate" />
+        android:label="getDate" >
+        <action
+            android:id="@+id/action_getDate_to_getSex"
+            app:destination="@id/getSex" />
+    </fragment>
+    <fragment
+        android:id="@+id/getSex"
+        android:name="com.example.calculator_cf.getSex"
+        android:label="fragment_get_sex"
+        tools:layout="@layout/fragment_get_sex" />
 
 
 </navigation>
