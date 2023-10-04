@@ -19,7 +19,8 @@ class GetSurname : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetSurnameBinding
-    private lateinit var result: String
+    private lateinit var surname : String
+    private lateinit var result_surname: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,22 +42,25 @@ class GetSurname : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var button_surname = binding.buttonSurname
-        binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF)
+        surname = ""
 
 
+
+        Log.d("liveCfSurname", viewModel.live_CF.value.toString())
         binding.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val surname = binding.editTextSurname.text
-                val surnameLowerCase = surname.map { it.uppercaseChar() }
-                val surname_list = surnameLowerCase.toList()
-                result = viewModel.getNameAndgetSurname(surname_list)
+                surname = binding.editTextSurname.text.toString()
+                val surnameUpperCase = surname.map { it.uppercaseChar() }
+                val surname_list = surnameUpperCase.toList()
+                result_surname = viewModel.calcConsonants(surname_list)
 
                 if (surname.isNotEmpty()) {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data,viewModel.live_CF.value + result_surname)
                 }
             }
 
@@ -65,9 +69,12 @@ class GetSurname : Fragment() {
         })
 
         button_surname.setOnClickListener() {
-            findNavController().navigate(R.id.action_getSurname_to_getName)
-            viewModel.setCF(result)
-            viewModel.setSurname(binding.editTextSurname.text.toString())
+            if(surname.isEmpty()){
+                viewModel.showToast(requireContext(), "Il campo cognome è vuoto" , 30 )
+            } else {
+                findNavController().navigate(R.id.action_getSurname_to_getName)
+                viewModel.calcCF(result_surname)
+            }
         }
     }
 

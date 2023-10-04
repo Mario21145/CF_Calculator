@@ -2,6 +2,7 @@ package com.example.calculator_cf
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,21 +36,15 @@ class Home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.Exit.setOnClickListener {viewModel.exit_app()}
-        binding.GoGetName.setOnClickListener { findNavController().navigate(R.id.action_home_to_getSurname) }
-
+        binding.GoGetName.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_getSurname)
+        }
+        Log.d("liveCfHome", viewModel.live_CF.value.toString())
     }
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Home.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Home().apply {
