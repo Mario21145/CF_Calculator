@@ -17,7 +17,28 @@ class AppViewModel : ViewModel() {
     private var _liveCF = MutableLiveData("")
     var live_CF: MutableLiveData<String> = _liveCF
         get() = _liveCF
-    fun setCF(parameter : String){
+
+    fun setCF(parameter : String , case : String){
+
+        /*
+        when(case){
+            "surname" -> {
+                getNameAndgetSurname(parameter.toList())
+                var i = 0
+                while (i <= 2){
+                    live_CF
+                }
+            }
+            "name" -> {}
+            "date" -> {}
+            "month" -> {}
+            "day" -> {}
+            "townhall" -> {}
+            "lastLetter" -> {}
+
+        }*/
+
+
 
         if(_liveCF == MutableLiveData("")){
             _liveCF.value = parameter
