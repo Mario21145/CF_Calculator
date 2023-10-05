@@ -60,31 +60,30 @@ class getCity : Fragment() {
 
                 if (result_city == "comune") {
                     Log.d("City", "Comune inizializzato con successo")
-                } else if (selectedCity.isEmpty()) {
-                    binding.LiveCFText.text =
-                        getString(R.string.CF_live_Data, viewModel.live_CF.value)
                 } else {
                     viewModel.setCity(selectedCity)
                 }
-
 
             }
 
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-
             }
 
         }
+
 
 
         binding.buttonCity.setOnClickListener() {
             if (result_city.isEmpty()) {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
+            } else {
+                viewModel.setCity(selectedCity)
             }
         }
 
     }
+
 
 
     companion object {

@@ -18,7 +18,7 @@ import com.example.calculator_cf.AppViewModel
 
 class GetSurname : Fragment() {
 
-    private val appviewmodel: AppViewModel by activityViewModels()
+    private val viewModel: AppViewModel by activityViewModels()
     private var binding: FragmentGetSurnameBinding? = null
     private lateinit var surname : String
     private lateinit var result_surname: String
@@ -43,26 +43,26 @@ class GetSurname : Fragment() {
 
         binding?.apply{
             lifecycleOwner = viewLifecycleOwner
-            getSurname = this@GetSurname
+            appViewModel = AppViewModel()
         }
 
 
-        var button_surname = binding.buttonSurname
+        var button_surname = binding!!.buttonSurname
         surname = ""
         result_surname = ""
 
-        binding.editTextSurname.addTextChangedListener(object : TextWatcher {
+        binding!!.editTextSurname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                surname = binding.editTextSurname.text.toString()
+                surname = binding!!.editTextSurname.text.toString()
                 val surnameUpperCase = surname.map { it.uppercaseChar() }
                 val surname_list = surnameUpperCase.toList()
-                result_surname = appviewmodel.calcConsonants(surname_list)
-                appviewmodel.setSurname(surname)
-                appviewmodel.calcCF(result_surname)
+                result_surname = viewModel.calcConsonants(surname_list)
+                viewModel.setSurname(surname)
+                viewModel.calcCF(result_surname)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -72,13 +72,13 @@ class GetSurname : Fragment() {
 
         button_surname.setOnClickListener() {
             if(surname.isEmpty()){
-                appviewmodel.showToast(requireContext(), "Il campo cognome è vuoto" , 30 )
+                viewModel.showToast(requireContext(), "Il campo cognome è vuoto" , 30 )
             } else {
                 findNavController().navigate(R.id.action_getSurname_to_getName)
             }
         }
 
-        Log.d("liveCfSurname", appviewmodel.live_CF.value.toString())
+        Log.d("liveCfSurname", viewModel.live_CF.value.toString())
     }
 
 

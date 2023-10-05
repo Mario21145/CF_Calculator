@@ -211,27 +211,32 @@ class AppViewModel : ViewModel() {
 
         if (day.length == 2) {
             return day
+        } else if (day.length == 1) {
+            return day + 0
         }
+
         return ""
     }
 
     fun calcCity(city: String): String {
         when (city) {
-            "cardito" -> {
+            data.cities[0] -> {
                 return "B759"
             }
-            "" -> {}
-            "" -> {}
-            "" -> {}
-            "" -> {}
+            data.cities[1] -> {return "A064"}
+            data.cities[2] -> {return "D789"}
+            data.cities[3] -> {return "A512"}
+            data.cities[4] -> {return "F839"}
         }
         return " return ErrorCity "
     }
 
     fun calcSex(sex : String){
+        var sexInt = sex.toInt()
         if(sex == "men"){
             Log.d("Sex" , "Il sesso selezionato è uomo")
         } else if( sex == "women"){
+            _day.value =
         }
     }
 

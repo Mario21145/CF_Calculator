@@ -37,31 +37,38 @@ class getSex : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val radioGroup = binding.radioGroup
+
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
-        men_radio = binding.men
-        women_radio = binding.women
-
-        var radioGroup = binding.radioGroup
-
-        var text_men_radio = binding.men.text.toString()
-        var text_women_radio = binding.women.text.toString()
+        var textMenRadio = binding.men.text.toString()
+        var textWomenRadio = binding.women.text.toString()
 
         binding.radioGroup.setOnClickListener(){
+
+            val numButtons = radioGroup.childCount
+            var result = ""
+
+            for (i in 0 until numButtons) {
+                val radioButton = radioGroup.getChildAt(i) as RadioButton
+
+                if (radioButton.isSelected) {
+
+                    break
+                }
+            }
+
 
         }
 
         binding.buttonSex.setOnClickListener() {
 
-            val radioGroup = binding.radioGroup
             val numButtons = radioGroup.childCount
             var isActive = false
 
             for (i in 0 until numButtons) {
                 val radioButton = radioGroup.getChildAt(i) as RadioButton
-
-                radioButton.isSelected
 
                 if (radioButton.isChecked) {
                     isActive = true
