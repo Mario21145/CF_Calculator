@@ -37,6 +37,9 @@ class getSex : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
         men_radio = binding.men
         women_radio = binding.women
 

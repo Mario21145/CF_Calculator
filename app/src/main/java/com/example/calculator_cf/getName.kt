@@ -46,10 +46,12 @@ class getName : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
         val button_name = binding.buttonName
         name = ""
 
-        binding.LiveCFText.text =  viewModel.live_CF.value
 
         binding.editTextText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -61,15 +63,7 @@ class getName : Fragment() {
                 val nameUpperCase = name.map { it.uppercaseChar() }
                 val name_list = nameUpperCase.toList()
                 result_name = viewModel.calcConsonants(name_list)
-
-                if (name.isNotEmpty()) {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result_name)
-                } else if(name.isEmpty()){
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
-                }
-
-
-
+                viewModel.setName(name)
             }
 
             override fun afterTextChanged(s: Editable?) {

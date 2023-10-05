@@ -25,13 +25,8 @@ class getDate : Fragment() {
     private lateinit var Date: String
     private lateinit var day: String
     private lateinit var selectedMonth: String
+    private lateinit var result_month : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +39,10 @@ class getDate : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
 
         var data = Dataset()
         var button_date = binding.dateButton
@@ -64,13 +63,10 @@ class getDate : Fragment() {
 
                 } else if (viewModel.date.value!!.isEmpty()) {//Non settato
                     viewModel.setDate(result_date)
-                    viewModel.calcCF(viewModel.date.value.toString())
+                    viewModel.calcCF(result_date)
                 } else if(viewModel.date.value!!.isNotEmpty()){//Settato
                     viewModel.setDate(result_date)
                 }
-
-                binding.LiveCFText.text =  getString(R.string.CF_live_Data , viewModel.live_CF.value)
-
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -89,7 +85,7 @@ class getDate : Fragment() {
 
                if (viewModel.day.value!!.isEmpty()) {
                     viewModel.setDay(result_day)
-                    viewModel.calcCF(viewModel.day.value.toString())
+                    viewModel.calcCF(result_day)
                 }
                 binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
             }
@@ -108,7 +104,7 @@ class getDate : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 selectedMonth = data.months[p2]
-                val result_month = viewModel.calcMonth(selectedMonth)
+                result_month = viewModel.calcMonth(selectedMonth)
 
 
                 if (result_month == "mese") {
@@ -138,6 +134,7 @@ class getDate : Fragment() {
                 viewModel.showToast(requireContext() , "Riempire i campi" , 30)
             } else {
                 findNavController().navigate(R.id.action_getDate_to_getSex)
+                viewModel.calcCF(result_month)
             }
 
             /*

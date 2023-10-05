@@ -15,13 +15,20 @@ class AppViewModel : ViewModel() {
     var data = Dataset()
 
     //LiveData CF
-    private var _liveCF = MutableLiveData<String>()
-    val live_CF: LiveData<String>
-        get() = _liveCF
 
-    init {
-        _liveCF.value = ""
-        Log.d("liveCfViewmodel", _liveCF.value.toString())
+
+
+    private val _liveCF = MutableLiveData<String>("test")
+    val live_CF: LiveData<String> = _liveCF
+
+    fun calcCF(result : String) {
+
+        if(_liveCF == MutableLiveData("")){
+            _liveCF.value = result
+        } else {
+            _liveCF.value = result
+        }
+
     }
 
     //Logic Home exitProcess(0)
@@ -30,16 +37,17 @@ class AppViewModel : ViewModel() {
     }
 
     //Getter & Setter
-    private var _name = MutableLiveData("")
-    var name = _name
-    fun setName(name: String) {
-        _name.value = name
-    }
 
     private var _surname = MutableLiveData("")
     var surname = _surname
     fun setSurname(surname: String) {
         _surname.value = surname
+    }
+
+    private var _name = MutableLiveData("")
+    var name = _name
+    fun setName(name: String) {
+        _name.value = name
     }
 
     private var _date = MutableLiveData("")
@@ -71,21 +79,6 @@ class AppViewModel : ViewModel() {
     fun setCity(city: String) {
         _city.value = city
     }
-
-    fun setPosition() {
-
-    }
-
-    fun calcCF(parameter: String) {
-
-        if (_liveCF == MutableLiveData("")) {
-            _liveCF.value = parameter
-        } else {
-            _liveCF.value = _liveCF.value + parameter
-        }
-
-    }
-
 
     fun showToast(context: Context, msg: String, duration: Int) {
         Toast.makeText(context, msg, duration).show()
@@ -233,6 +226,13 @@ class AppViewModel : ViewModel() {
             "" -> {}
         }
         return " return ErrorCity "
+    }
+
+    fun calcSex(sex : String){
+        if(sex == "men"){
+            Log.d("Sex" , "Il sesso selezionato è uomo")
+        } else if( sex == "women"){
+        }
     }
 
 

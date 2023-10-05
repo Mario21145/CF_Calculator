@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
-                android:text="@{AppViewModel.live_CF}"
+                android:text="@{@string/CF_live_Data(AppViewModel.live_CF)}"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/editText_Surname"
