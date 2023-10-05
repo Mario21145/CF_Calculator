@@ -236,7 +236,7 @@ class AppViewModel : ViewModel() {
         if(sex == "men"){
             Log.d("Sex" , "Il sesso selezionato è uomo")
         } else if( sex == "women"){
-            _day.value =
+            _day.value = //
         }
     }
 
