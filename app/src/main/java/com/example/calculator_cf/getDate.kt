@@ -15,27 +15,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetDateBinding
-import com.example.calculator_cf.databinding.FragmentGetSurnameBinding
+import com.example.calculator_cf.data.Dataset
 
 
 class getDate : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetDateBinding
-    private lateinit var result_date : String
-    private lateinit var result_day : String
+    private lateinit var Date: String
+    private lateinit var day: String
+    private lateinit var selectedMonth: String
     private lateinit var result_month : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_date, container, false)
         return binding.root
@@ -45,9 +40,15 @@ class getDate : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
+
+        var data = Dataset()
         var button_date = binding.dateButton
+        day = ""
 
-
+        Log.d("liveCfViewmodel", viewModel.live_CF.value.toString())
         //Date
         binding.date.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -55,20 +56,17 @@ class getDate : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val date = binding.date.text.toString()
-                result_date = viewModel.calcDate(date)
+                Date = binding.date.text.toString()
+                var result_date = viewModel.calcDate(Date)
 
-                viewModel.setDate(date)
-                if(result_date == "Error"){
+                if(result_date == "Error") {
 
-                } else if(viewModel.date.value!!.isEmpty()){
-                    viewModel.setDate(date)
-                } else if(viewModel.date.value!!.isNotEmpty()){
-                    viewModel.setCF(result_date)
+                } else if (viewModel.date.value!!.isEmpty()) {//Non settato
+                    viewModel.setDate(result_date)
+                    viewModel.calcCF(result_date)
+                } else if(viewModel.date.value!!.isNotEmpty()){//Settato
+                    viewModel.setDate(result_date)
                 }
-
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
-
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -82,23 +80,14 @@ class getDate : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val day = binding.day.text.toString()
-                result_day = viewModel.calcDay(day)
+                day = binding.day.text.toString()
+                var result_day = viewModel.calcDay(2004)
 
-
-                viewModel.setDate(day)
-                if(result_date == "Error"){
-
-                } else if(viewModel.day.value!!.isEmpty()){
-                    viewModel.setDay(day)
-                    viewModel.setCF(result_day)
-                } else if(viewModel.day.value!!.isNotEmpty()){
-                    viewModel.setDay(day)
-                    viewModel.setCF(result_day)
+               if (viewModel.day.value!!.isEmpty()) {
+                    viewModel.setDay(result_day)
+                    viewModel.calcCF(result_day)
                 }
-
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
-
+                binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -106,34 +95,29 @@ class getDate : Fragment() {
         })
 
 
-
         //Spinner
-        val months = listOf(
-            "Gennaio", "Febbraio", "Marzo", "Aprile",
-            "Maggio", "Giugno", "Luglio", "Agosto",
-            "Settembre", "Ottobre", "Novembre", "Dicembre" , "mese"
-        )
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item , months)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, data.months)
         binding.month.adapter = adapter
         binding.month.setSelection(12)
         binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
-                var selectedMonth = months[p2]
-                val result_month = viewModel.calcMonth(selectedMonth)
+                selectedMonth = data.months[p2]
+                result_month = viewModel.calcMonth(selectedMonth)
 
 
-                if(result_month == "mese"){
-
-                } else if(viewModel.month.value!!.isEmpty()){
-                    viewModel.setMonth(selectedMonth)
-                    viewModel.setCF(result_month)
+                if (result_month == "mese") {
+                    Log.d("Date State" , "Date inizializzata con successo")
                 } else {
                     viewModel.setMonth(selectedMonth)
-                    viewModel.setCF(result_month)
                 }
 
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
+               if(viewModel.month.value!!.isNotEmpty()) {
+                   viewModel.calcCF(result_month)
+                   binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
+                }
+
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -146,20 +130,25 @@ class getDate : Fragment() {
 
         button_date.setOnClickListener {
 
-            if(result_date == "Error"){
-                val msg = getString(R.string.Error_Date)
-                viewModel.showToast(requireContext() , "$msg" , 20)
+            if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty())  {
+                viewModel.showToast(requireContext() , "Riempire i campi" , 30)
+            } else {
+                findNavController().navigate(R.id.action_getDate_to_getSex)
+                viewModel.calcCF(result_month)
             }
 
-            findNavController().navigate(R.id.action_getDate_to_getSex)
-
+            /*
             val name = viewModel.name.value
             val surname = viewModel.surname.value
             val date = viewModel.date.value
             val day = viewModel.day.value
             val month = viewModel.month.value
+            Log.d(
+                "Variabili",
+                "nome: $name / cognome: $surname / anno: $date / giorno: $day / mese: $month  "
+            )
 
-            Log.d("Variabili" , "nome: $name / cognome: $surname / anno: $date / giorno: $day / mese: $month  " )
+             */
 
 
         }

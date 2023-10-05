@@ -26,8 +26,8 @@ class getName : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetNameBinding
-    private lateinit var result: String
-    private lateinit var name_list: List<Char>
+    private lateinit var result_name: String
+    private lateinit var name : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,25 +46,24 @@ class getName : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
         val button_name = binding.buttonName
+        name = ""
+
 
         binding.editTextText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                val name = binding.editTextText.text
-                val nameLowerCase = name.map { it.uppercaseChar() }
-                name_list = nameLowerCase.toList()
-                result = viewModel.getNameAndgetSurname(name_list)
-
-                if (name.isNotEmpty()) {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result)
-                } else if(name.isEmpty()){
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
-                }
+                name = binding.editTextText.text.toString()
+                val nameUpperCase = name.map { it.uppercaseChar() }
+                val name_list = nameUpperCase.toList()
+                result_name = viewModel.calcConsonants(name_list)
+                viewModel.setName(name)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -73,9 +72,16 @@ class getName : Fragment() {
 
 
         button_name.setOnClickListener {
-            findNavController().navigate(R.id.action_getName_to_getDate)
-            viewModel.setName(binding.editTextText.text.toString())
-            viewModel.setCF(result)
+
+             if(name.isEmpty()){
+                 viewModel.showToast(requireContext() , "Il campo nome è vuoto" , 30)
+             } else {
+                 findNavController().navigate(R.id.action_getName_to_getDate)
+                 viewModel.calcCF(result_name)
+             }
+
+
+
         }
 
     }

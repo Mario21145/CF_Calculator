@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,8 @@ import com.example.calculator_cf.databinding.FragmentGetSexBinding
 class getSex : Fragment() {
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetSexBinding
+    private lateinit var men_radio: RadioButton
+    private lateinit var women_radio: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +30,6 @@ class getSex : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
-
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_sex, container, false)
         return binding.root
     }
@@ -37,26 +37,53 @@ class getSex : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var men_radio = binding.men
-        val text_men_radio = binding.men.text.toString()
-        var women_radio = binding.women
-        val text_women_radio = binding.women.text.toString()
+        val radioGroup = binding.radioGroup
 
-        men_radio.setOnClickListener(){
-            viewModel.setSex(text_men_radio)
-            Log.d("sex" , "Il sesso selezionato è: ${viewModel.sex.value}o")
-            viewModel.setCF(text_men_radio)
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
+        var textMenRadio = binding.men.text.toString()
+        var textWomenRadio = binding.women.text.toString()
+
+        binding.radioGroup.setOnClickListener(){
+
+            val numButtons = radioGroup.childCount
+            var result = ""
+
+            for (i in 0 until numButtons) {
+                val radioButton = radioGroup.getChildAt(i) as RadioButton
+
+                if (radioButton.isSelected) {
+
+                    break
+                }
+            }
+
+
         }
 
-        women_radio.setOnClickListener(){
+        binding.buttonSex.setOnClickListener() {
 
-            viewModel.setSex(text_women_radio)
-            Log.d("sex" , "Il sesso selezionato è: ${viewModel.sex.value}")
-            viewModel.setCF(text_women_radio)
-        }
+            val numButtons = radioGroup.childCount
+            var isActive = false
 
-        binding.buttonSex.setOnClickListener(){
-            findNavController().navigate(R.id.action_getSex_to_getCity)
+            for (i in 0 until numButtons) {
+                val radioButton = radioGroup.getChildAt(i) as RadioButton
+
+                if (radioButton.isChecked) {
+                    isActive = true
+                    break
+                }
+            }
+
+            if (isActive) {
+                findNavController().navigate(R.id.action_getSex_to_getCity)
+            } else {
+                viewModel.showToast(requireContext() , "Selezionare il sesso" , 30)
+            }
+
+
+
         }
 
 

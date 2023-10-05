@@ -2,65 +2,34 @@ package com.example.calculator_cf
 
 import android.content.Context
 import android.util.Log
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.merge
-import kotlin.reflect.typeOf
+import com.example.calculator_cf.data.Dataset
+
 
 class AppViewModel : ViewModel() {
 
+    //Dataset
+    var data = Dataset()
+
     //LiveData CF
-    private var _liveCF = MutableLiveData("")
-    var live_CF: MutableLiveData<String> = _liveCF
-        get() = _liveCF
-
-    fun setCF(parameter : String){
-
-        /*
-        when(case){
-            "surname" -> {
-                getNameAndgetSurname(parameter.toList())
-                var i = 0
-                while (i <= 2){
-                    live_CF
-                }
-            }
-            "name" -> {}
-            "date" -> {}
-            "month" -> {}
-            "day" -> {}
-            "city" -> {}
-            "lastLetter" -> {}
-
-        }*/
 
 
+
+    private val _liveCF = MutableLiveData<String>("test")
+    val live_CF: LiveData<String> = _liveCF
+
+    fun calcCF(result : String) {
 
         if(_liveCF == MutableLiveData("")){
-            _liveCF.value = parameter
-            Log.d("Caso vuoto" , "caso vuoto linea 28")
+            _liveCF.value = result
         } else {
-             _liveCF.value = _liveCF.value + parameter
+            _liveCF.value = result
         }
+
     }
-
-
-
-    init{
-       // _liveCF.value  =  "XXXXXXXXXXXXXXX"
-    }
-
-   /* fun UpdateLiveData(result: String) {
-        if (live_CF.value!!.isEmpty()) {
-            if (live_CF.value == _liveCF.value) _liveCF.value = result
-        } else {
-            live_CF.value = live_CF.value.plus(result)
-        }
-    }*/
 
     //Logic Home exitProcess(0)
     fun exit_app() {
@@ -68,16 +37,17 @@ class AppViewModel : ViewModel() {
     }
 
     //Getter & Setter
-    private var _name = MutableLiveData("")
-    var name = _name
-    fun setName(name: String) {
-        _name.value = name
-    }
 
     private var _surname = MutableLiveData("")
     var surname = _surname
     fun setSurname(surname: String) {
         _surname.value = surname
+    }
+
+    private var _name = MutableLiveData("")
+    var name = _name
+    fun setName(name: String) {
+        _name.value = name
     }
 
     private var _date = MutableLiveData("")
@@ -88,69 +58,41 @@ class AppViewModel : ViewModel() {
 
     private var _month = MutableLiveData("")
     var month = _month
-    fun setMonth(month : String){
+    fun setMonth(month: String) {
         _month.value = month
     }
 
     private var _day = MutableLiveData("")
     var day = _day
-    fun setDay(day : String){
+    fun setDay(day: String) {
         _day.value = day
     }
 
     private var _sex = MutableLiveData("")
     var sex = _sex
-    fun setSex(sex : String){
+    fun setSex(sex: String) {
         _sex.value = sex
     }
 
+    private var _city = MutableLiveData("")
+    var city = _city
+    fun setCity(city: String) {
+        _city.value = city
+    }
 
-    fun showToast(context: Context, msg: String, duration: Int = Toast.LENGTH_SHORT) {
+    fun showToast(context: Context, msg: String, duration: Int) {
         Toast.makeText(context, msg, duration).show()
     }
 
 
-
-
-
-
-
-
-
     //Logic getName
-    fun getNameAndgetSurname(name: List<Char>): String {
-        val consonants = listOf(
-            'B',
-            'C',
-            'D',
-            'F',
-            'G',
-            'H',
-            'J',
-            'K',
-            'L',
-            'M',
-            'N',
-            'P',
-            'Q',
-            'R',
-            'S',
-            'T',
-            'V',
-            'W',
-            'X',
-            'Y',
-            'Z'
-        )
-        val vocals = listOf('A', 'E', 'I', 'O', 'U')
-
+    fun calcConsonants(name: List<Char>): String {
         var char_result = mutableListOf<Char>()
         var c = mutableListOf<Char>()
         var v = mutableListOf<Char>()
 
-
         for (letterName in name) {
-            if (consonants.contains(letterName)) {
+            if (data.consonants.contains(letterName)) {
                 c.add(letterName)
                 Log.d("consonants", "$c")
                 if (c.size == 3) {
@@ -159,7 +101,7 @@ class AppViewModel : ViewModel() {
                 }
             }
 
-            if (vocals.contains(letterName)) {
+            if (data.vocals.contains(letterName)) {
                 v.add(letterName)
             }
 
@@ -196,39 +138,106 @@ class AppViewModel : ViewModel() {
 
 
     //GetDate Fragment
-    fun calcDate(date : String): String {
-        if(date.length == 4){
+    fun calcDate(date: String): String {
+        if (date.length == 4) {
             return date.takeLast(2)
         } else {
             return "Error"
         }
     }
 
-    fun calcMonth(month : String) : String {
-        when(month){
-            "mese" -> {return "mese"}
-            "Gennaio"-> {return "A"}
-            "Febbraio" -> {return "B"}
-            "Marzo" -> {return "C"}
-            "Aprile" -> {return "D"}
-            "Maggio" -> {return "E"}
-            "Giugno" -> {return "H"}
-            "Luglio" -> {return "L"}
-            "Agosto" -> {return "M"}
-            "Settembre" -> {return "P"}
-            "Ottobre" -> {return "R"}
-            "Novembre" -> {return "S"}
-            "Dicembre" -> {return "T"}
-            else -> {return "Error"}
+    fun calcMonth(month: String): String {
+        when (month) {
+
+            data.months[0] -> {
+                return "A"
+            }
+
+            data.months[1] -> {
+                return "B"
+            }
+
+            data.months[2] -> {
+                return "C"
+            }
+
+            data.months[3] -> {
+                return "D"
+            }
+
+            data.months[4] -> {
+                return "E"
+            }
+
+            data.months[5] -> {
+                return "H"
+            }
+
+            data.months[6] -> {
+                return "L"
+            }
+
+            data.months[7] -> {
+                return "M"
+            }
+
+            data.months[8] -> {
+                return "P"
+            }
+
+            data.months[9] -> {
+                return "R"
+            }
+
+            data.months[10] -> {
+                return "S"
+            }
+
+            data.months[11] -> {
+                return "T"
+            }
+
+            data.months[12] -> {
+                return "mese"
+            }
+
+            else -> {
+                return "Error"
+            }
         }
     }
 
-    fun calcDay(day: String) : String {
+    fun calcDay(day: String): String {
 
-        if(day.length == 2){
+        if (day.length == 2) {
             return day
+        } else if (day.length == 1) {
+            return day + 0
         }
+
         return ""
+    }
+
+    fun calcCity(city: String): String {
+        when (city) {
+            data.cities[0] -> {
+                return "B759"
+            }
+            data.cities[1] -> {return "A064"}
+            data.cities[2] -> {return "D789"}
+            data.cities[3] -> {return "A512"}
+            data.cities[4] -> {return "F839"}
+        }
+        return " return ErrorCity "
+    }
+
+    fun calcSex(sex : String){
+        var sexInt = sex.toInt()
+        if(sex == "men"){
+            Log.d("Sex" , "Il sesso selezionato è uomo")
+        } else if( sex == "women"){
+            _day.value =
+        }
     }
 
 
