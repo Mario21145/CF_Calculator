@@ -17,7 +17,8 @@
 
     <!--Live Data CF string-->
     <string name="CF_live_Data">Il tuo codice fiscale è: %s</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

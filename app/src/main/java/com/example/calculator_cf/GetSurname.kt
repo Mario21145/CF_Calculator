@@ -43,8 +43,10 @@ class GetSurname : Fragment() {
 
         binding?.apply{
             lifecycleOwner = viewLifecycleOwner
-            appViewModel = AppViewModel()
+            appViewModel = viewModel
         }
+
+
 
 
         var button_surname = binding!!.buttonSurname

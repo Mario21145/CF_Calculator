@@ -81,7 +81,7 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 day = binding.day.text.toString()
-                var result_day = viewModel.calcDay(2004)
+                var result_day = viewModel.calcDay(day)
 
                if (viewModel.day.value!!.isEmpty()) {
                     viewModel.setDay(result_day)

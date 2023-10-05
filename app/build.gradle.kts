@@ -29,7 +29,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         dataBinding = true
     }
 
@@ -54,7 +53,7 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.6.1")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.3")
 
 
