@@ -38,9 +38,7 @@ class GetSurname : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
-
         surname = ""
-
         val button_surname = binding.buttonSurname
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
@@ -58,9 +56,9 @@ class GetSurname : Fragment() {
 
                 if (binding.editTextSurname.text.isNotEmpty()) {
                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
-                }
+               }
 
-
+  // branch main
 
             }
 
