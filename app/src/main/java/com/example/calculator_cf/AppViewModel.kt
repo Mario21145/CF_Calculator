@@ -2,6 +2,7 @@ package com.example.calculator_cf
 
 import android.content.Context
 import android.util.Log
+
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,20 +15,17 @@ class AppViewModel : ViewModel() {
     //Dataset
     var data = Dataset()
 
-    //LiveData CF
+    private var _liveCF = MutableLiveData("")
+    val live_CF: LiveData<String>
+        get() = _liveCF
 
-
-    private val _liveCF = MutableLiveData<String>("")
-    val live_CF: LiveData<String> = _liveCF
-
-    fun calcCF(result: String) {
-
-        if (_liveCF == MutableLiveData("")) {
+    fun setCF(result : String){
+        Log.d("liveCfViewModel" , "${live_CF.value}")
+        if(_liveCF == MutableLiveData("")){
             _liveCF.value = result
         } else {
-            _liveCF.value =_liveCF.value + result
+            _liveCF.value = _liveCF.value + result
         }
-
     }
 
     //Logic Home exitProcess(0)
@@ -38,43 +36,43 @@ class AppViewModel : ViewModel() {
     //Getter & Setter
 
     private var _surname = MutableLiveData("")
-    var surname = _surname
+    var surname : LiveData<String> = _surname
     fun setSurname(surname: String) {
         _surname.value = surname
     }
 
     private var _name = MutableLiveData("")
-    var name = _name
+    var name : LiveData<String> = _name
     fun setName(name: String) {
         _name.value = name
     }
 
     private var _date = MutableLiveData("")
-    var date = _date
+    var date : LiveData<String> = _date
     fun setDate(date: String) {
         _date.value = date
     }
 
     private var _month = MutableLiveData("")
-    var month = _month
+    var month : LiveData<String> = _month
     fun setMonth(month: String) {
         _month.value = month
     }
 
     private var _day = MutableLiveData(0)
-    var day = _day
+    var day : LiveData<Int> = _day
     fun setDay(day: Int) {
         _day.value = day
     }
 
     private var _sex = MutableLiveData("")
-    var sex = _sex
+    var sex : LiveData<String> = _sex
     fun setSex(sex: String) {
         _sex.value = sex
     }
 
     private var _city = MutableLiveData("")
-    var city = _city
+    var city : LiveData<String> = _city
     fun setCity(city: String) {
         _city.value = city
     }
@@ -138,7 +136,8 @@ class AppViewModel : ViewModel() {
 
     //GetDate Fragment
     fun calcDate(date: String): String {
-        if (date.length == 4) {
+        if(date.length == 4) {
+            Log.d("date" , "${date.takeLast(2)}")
             return date.takeLast(2)
         } else {
             return "Error"
@@ -229,7 +228,7 @@ class AppViewModel : ViewModel() {
                 return "F839"
             }
         }
-        return "return ErrorCity"
+        return "ErrorCity"
     }
 
     fun calcSex(sex: String) {

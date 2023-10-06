@@ -12,7 +12,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".getSex">
+        tools:context=".Recap">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,52 +32,62 @@
                 tools:text="@string/CF_live_Data" />
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:text="Inserire il sesso"
+                android:id="@+id/nameRecap"
+                android:layout_width="171dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="104dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.342"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Live_CF_Text" />
+
+            <TextView
+                android:id="@+id/surname"
+                android:layout_width="171dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="140dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.345"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Live_CF_Text" />
+
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="176dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="188dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.338"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Live_CF_Text" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="179dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="236dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/button_surname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.334"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Live_CF_Text"
-                tools:text="inserire il sesso" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="141dp"
-                android:layout_height="129dp"
-                android:layout_marginTop="72dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.24">
-
-                <RadioButton
-                    android:id="@+id/men"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/men"
-                    android:textAlignment="center"
-                    />
-
-                <RadioButton
-                    android:id="@+id/women"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/women"
-                    android:textAlignment="center"
-                    />
-            </RadioGroup>
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/button_sex"
+                android:id="@+id/button_surname"
                 android:layout_width="126dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="92dp"
-                android:text="@string/Go_Button"
+                android:text="Vai"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -85,6 +96,5 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </FrameLayout>
 </layout>

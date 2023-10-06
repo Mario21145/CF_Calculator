@@ -61,7 +61,11 @@
     <fragment
         android:id="@+id/recap"
         android:name="com.example.calculator_cf.Recap"
-        android:label="Recap" />
+        android:label="Recap" >
+        <action
+            android:id="@+id/action_recap_to_home"
+            app:destination="@id/home" />
+    </fragment>
 
 
 </navigation>

@@ -19,7 +19,7 @@ class getCity : Fragment() {
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetCityBinding
     private lateinit var selectedCity: String
-    private lateinit var result_city: String
+    private lateinit var resultCity: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +42,9 @@ class getCity : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
+        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
         var data = Dataset()
-
 
         val adapter = ArrayAdapter(
             requireContext(),
@@ -57,30 +57,26 @@ class getCity : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 selectedCity = data.cities[p2]
-                result_city = viewModel.calcCity(selectedCity)
+                resultCity = viewModel.calcCity(selectedCity)
 
-                if (result_city == "comune") {
+                if (resultCity != "comune") {
                     Log.d("City", "Comune inizializzato con successo")
                 } else {
-                    viewModel.setCity(selectedCity)
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + resultCity)
                 }
 
             }
-
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
         }
 
-        var result = viewModel.live_CF.value?.let { viewModel.calcLastLetter(it) }
-        Log.d("l" , "${result}")
-
         binding.buttonCity.setOnClickListener() {
-            if (result_city.isEmpty()) {
+            if (resultCity.isEmpty()) {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
-                viewModel.calcCF(result_city)
+                viewModel.setCF(resultCity)
                 Log.d("liveCfCity" , "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getCity_to_recap)
             }

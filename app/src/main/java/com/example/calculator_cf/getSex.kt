@@ -44,6 +44,10 @@ class getSex : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
+        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
+
+
+
         binding.buttonSex.setOnClickListener() {
 
             var isActive = false
@@ -56,14 +60,13 @@ class getSex : Fragment() {
                     break
                 }
             }
-            if (isActive) {
 
+            if (isActive) {
                 Log.d("test", "${viewModel.sex.value}")
                 if(viewModel.sex.value!!.isNotEmpty()){
                     viewModel.calcSex(viewModel.sex.value.toString())
                     Log.d("liveCfSex" , "${viewModel.live_CF.value}")
                 }
-
                 findNavController().navigate(R.id.action_getSex_to_getCity)
             } else {
                 viewModel.showToast(requireContext(), "Selezionare il sesso", 30)

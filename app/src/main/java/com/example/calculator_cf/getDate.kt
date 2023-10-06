@@ -14,8 +14,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.calculator_cf.databinding.FragmentGetDateBinding
 import com.example.calculator_cf.data.Dataset
+import com.example.calculator_cf.databinding.FragmentGetDateBinding
 
 
 class getDate : Fragment() {
@@ -45,7 +45,6 @@ class getDate : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
-
         result_date = ""
         result_month = ""
         result_day = ""
@@ -55,6 +54,7 @@ class getDate : Fragment() {
         day = ""
 
 
+        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
         //Date
         binding.date.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -63,20 +63,23 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Date = binding.date.text.toString()
                 result_date = viewModel.calcDate(Date)
+                binding.LiveCFText.text =
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + result_date)
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-        //Day
+
         binding.day.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 day = binding.day.text.toString()
-                viewModel.setDay(day.toInt())
+                binding.LiveCFText.text =
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + viewModel.day.value)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -99,10 +102,9 @@ class getDate : Fragment() {
                 selectedMonth = data.months[p2]
                 result_month = viewModel.calcMonth(selectedMonth)
 
-                if (result_month == "mese") {
-                    Log.d("Date State", "Date inizializzata con successo")
-                } else {
-                    viewModel.setMonth(selectedMonth)
+                if (result_month != "mese") {
+                    binding.LiveCFText.text =
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
                 }
             }
 
@@ -119,26 +121,16 @@ class getDate : Fragment() {
             if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty()) {
                 viewModel.showToast(requireContext(), "Riempire i campi", 30)
             } else {
-            viewModel.calcCF(result_date)
-            viewModel.calcCF(result_month)
-            viewModel.calcCF(viewModel.day.value.toString())
-            findNavController().navigate(R.id.action_getDate_to_getSex)
-            Log.d("liveCfDate", "${viewModel.live_CF.value}")
-        }
+                viewModel.setCF(result_date)
+                viewModel.setCF(result_month)
+                viewModel.setCF(viewModel.day.value.toString())
 
-            /*
-            val name = viewModel.name.value
-            val surname = viewModel.surname.value
-            val date = viewModel.date.value
-            val day = viewModel.day.value
-            val month = viewModel.month.value
-            Log.d(
-                "Variabili",
-                "nome: $name / cognome: $surname / anno: $date / giorno: $day / mese: $month  "
-            )
-
-             */
-
+                viewModel.setDate(Date)
+                viewModel.setDay(day.toInt())
+                viewModel.setMonth(selectedMonth)
+                findNavController().navigate(R.id.action_getDate_to_getSex)
+                Log.d("liveCfDate", "${viewModel.live_CF.value}")
+            }
 
         }
 
