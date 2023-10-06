@@ -145,6 +145,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
+
     fun calcMonth(month: String): String {
         when (month) {
 
@@ -228,7 +229,7 @@ class AppViewModel : ViewModel() {
                 return "F839"
             }
         }
-        return " return ErrorCity "
+        return "return ErrorCity"
     }
 
     fun calcSex(sex: String) {
@@ -239,6 +240,16 @@ class AppViewModel : ViewModel() {
         }
     }
 
+
+    fun calcLastLetter(cf: String): String {
+
+        var sum = 0
+        for(i in 0..15){
+        //sum = sum + data.LastLetterCalc[cf[i]]!!
+        }
+        sum % 26
+        return sum.toString()
+    }
 
 
 

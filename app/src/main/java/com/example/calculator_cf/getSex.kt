@@ -53,7 +53,6 @@ class getSex : Fragment() {
                 if (radioButton.isChecked) {
                     isActive = true
                     viewModel.setSex(radioButton.text.toString())
-                    viewModel.calcSex(radioButton.text.toString())
                     break
                 }
             }
@@ -62,7 +61,7 @@ class getSex : Fragment() {
                 Log.d("test", "${viewModel.sex.value}")
                 if(viewModel.sex.value!!.isNotEmpty()){
                     viewModel.calcSex(viewModel.sex.value.toString())
-                    Log.d("liveCF" , "${viewModel.live_CF.value}")
+                    Log.d("liveCfSex" , "${viewModel.live_CF.value}")
                 }
 
                 findNavController().navigate(R.id.action_getSex_to_getCity)

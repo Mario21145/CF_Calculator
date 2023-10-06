@@ -12,4 +12,7 @@
     <string name="men">men</string>
     <string name="Error_Date">Lenght not valid</string>
     <string name="women">women</string>
+    <string name="nameRecap">Your name is : %s</string>
+    <string name="dateRecap">Your date is : %s</string>
+    <string name="cityRecap">Place of birth : %s</string>
 </resources>

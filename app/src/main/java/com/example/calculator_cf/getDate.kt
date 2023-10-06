@@ -25,9 +25,9 @@ class getDate : Fragment() {
     private lateinit var Date: String
     private lateinit var day: String
     private lateinit var selectedMonth: String
-    private lateinit var result_date : String
-    private lateinit var result_month : String
-    private lateinit var errorDay : String
+    private lateinit var result_date: String
+    private lateinit var result_month: String
+    private lateinit var result_day: String
 
 
     override fun onCreateView(
@@ -48,14 +48,13 @@ class getDate : Fragment() {
 
         result_date = ""
         result_month = ""
-        errorDay = ""
+        result_day = ""
 
-        var data = Dataset()
-        var button_date = binding.dateButton
+        val data = Dataset()
+        val button_date = binding.dateButton
         day = ""
 
 
-        Log.d("liveCfViewmodel", viewModel.live_CF.value.toString())
         //Date
         binding.date.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -76,16 +75,8 @@ class getDate : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-
-
                 day = binding.day.text.toString()
-                if(day.length == 2){
-                    errorDay = ""
-                    viewModel.setDay(day.toInt())
-                } else {
-                    errorDay = "ErrorDay"
-                }
+                viewModel.setDay(day.toInt())
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -95,7 +86,11 @@ class getDate : Fragment() {
 
         //Spinner
         val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, data.months)
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                data.months
+            )
         binding.month.adapter = adapter
         binding.month.setSelection(12)
         binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -105,7 +100,7 @@ class getDate : Fragment() {
                 result_month = viewModel.calcMonth(selectedMonth)
 
                 if (result_month == "mese") {
-                    Log.d("Date State" , "Date inizializzata con successo")
+                    Log.d("Date State", "Date inizializzata con successo")
                 } else {
                     viewModel.setMonth(selectedMonth)
                 }
@@ -121,19 +116,15 @@ class getDate : Fragment() {
 
         button_date.setOnClickListener {
 
-            if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty())  {
-                viewModel.showToast(requireContext() , "Riempire i campi" , 30)
-             } else if(errorDay == "ErrorDay"){
-            viewModel.showToast(requireContext() , "Giorno non valido" , 30)
-             }
-
-            else {
-                viewModel.calcCF(result_date)
-                viewModel.calcCF(result_month)
-                viewModel.calcCF(viewModel.day.value.toString())
-                findNavController().navigate(R.id.action_getDate_to_getSex)
-                Log.d("liveCfDate" , "${viewModel.live_CF.value}")
-            }
+            if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty()) {
+                viewModel.showToast(requireContext(), "Riempire i campi", 30)
+            } else {
+            viewModel.calcCF(result_date)
+            viewModel.calcCF(result_month)
+            viewModel.calcCF(viewModel.day.value.toString())
+            findNavController().navigate(R.id.action_getDate_to_getSex)
+            Log.d("liveCfDate", "${viewModel.live_CF.value}")
+        }
 
             /*
             val name = viewModel.name.value

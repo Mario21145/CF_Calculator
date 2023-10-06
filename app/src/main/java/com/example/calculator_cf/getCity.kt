@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.data.Dataset
 import com.example.calculator_cf.databinding.FragmentGetCityBinding
 
@@ -72,13 +73,16 @@ class getCity : Fragment() {
 
         }
 
-
+        var result = viewModel.live_CF.value?.let { viewModel.calcLastLetter(it) }
+        Log.d("l" , "${result}")
 
         binding.buttonCity.setOnClickListener() {
             if (result_city.isEmpty()) {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
-                viewModel.setCity(selectedCity)
+                viewModel.calcCF(result_city)
+                Log.d("liveCfCity" , "${viewModel.live_CF.value}")
+                findNavController().navigate(R.id.action_getCity_to_recap)
             }
         }
 
