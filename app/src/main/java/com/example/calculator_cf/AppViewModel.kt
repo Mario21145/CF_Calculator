@@ -17,16 +17,15 @@ class AppViewModel : ViewModel() {
     //LiveData CF
 
 
-
-    private val _liveCF = MutableLiveData<String>("test")
+    private val _liveCF = MutableLiveData<String>("")
     val live_CF: LiveData<String> = _liveCF
 
-    fun calcCF(result : String) {
+    fun calcCF(result: String) {
 
-        if(_liveCF == MutableLiveData("")){
+        if (_liveCF == MutableLiveData("")) {
             _liveCF.value = result
         } else {
-            _liveCF.value = result
+            _liveCF.value =_liveCF.value + result
         }
 
     }
@@ -62,9 +61,9 @@ class AppViewModel : ViewModel() {
         _month.value = month
     }
 
-    private var _day = MutableLiveData("")
+    private var _day = MutableLiveData(0)
     var day = _day
-    fun setDay(day: String) {
+    fun setDay(day: Int) {
         _day.value = day
     }
 
@@ -207,38 +206,39 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun calcDay(day: String): String {
-
-        if (day.length == 2) {
-            return day
-        } else if (day.length == 1) {
-            return day + 0
-        }
-
-        return ""
-    }
-
     fun calcCity(city: String): String {
         when (city) {
             data.cities[0] -> {
                 return "B759"
             }
-            data.cities[1] -> {return "A064"}
-            data.cities[2] -> {return "D789"}
-            data.cities[3] -> {return "A512"}
-            data.cities[4] -> {return "F839"}
+
+            data.cities[1] -> {
+                return "A064"
+            }
+
+            data.cities[2] -> {
+                return "D789"
+            }
+
+            data.cities[3] -> {
+                return "A512"
+            }
+
+            data.cities[4] -> {
+                return "F839"
+            }
         }
         return " return ErrorCity "
     }
 
-    fun calcSex(sex : String){
-        var sexInt = sex.toInt()
-        if(sex == "men"){
-            Log.d("Sex" , "Il sesso selezionato è uomo")
-        } else if( sex == "women"){
-
+    fun calcSex(sex: String) {
+        if (sex == "uomo") {
+            Log.d("Sex", "Il sesso selezionato è uomo")
+        } else if (sex == "donna") {
+            _day.value = _day.value!! + 40
         }
     }
+
 
 
 

@@ -25,7 +25,9 @@ class getDate : Fragment() {
     private lateinit var Date: String
     private lateinit var day: String
     private lateinit var selectedMonth: String
+    private lateinit var result_date : String
     private lateinit var result_month : String
+    private lateinit var errorDay : String
 
 
     override fun onCreateView(
@@ -44,9 +46,14 @@ class getDate : Fragment() {
         binding.appViewModel = AppViewModel()
 
 
+        result_date = ""
+        result_month = ""
+        errorDay = ""
+
         var data = Dataset()
         var button_date = binding.dateButton
         day = ""
+
 
         Log.d("liveCfViewmodel", viewModel.live_CF.value.toString())
         //Date
@@ -55,18 +62,8 @@ class getDate : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 Date = binding.date.text.toString()
-                var result_date = viewModel.calcDate(Date)
-
-                if(result_date == "Error") {
-
-                } else if (viewModel.date.value!!.isEmpty()) {//Non settato
-                    viewModel.setDate(result_date)
-                    viewModel.calcCF(result_date)
-                } else if(viewModel.date.value!!.isNotEmpty()){//Settato
-                    viewModel.setDate(result_date)
-                }
+                result_date = viewModel.calcDate(Date)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -80,14 +77,15 @@ class getDate : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-                day = binding.day.text.toString()
-                var result_day = viewModel.calcDay(day)
 
-               if (viewModel.day.value!!.isEmpty()) {
-                    viewModel.setDay(result_day)
-                    viewModel.calcCF(result_day)
+
+                day = binding.day.text.toString()
+                if(day.length == 2){
+                    errorDay = ""
+                    viewModel.setDay(day.toInt())
+                } else {
+                    errorDay = "ErrorDay"
                 }
-                binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -106,18 +104,11 @@ class getDate : Fragment() {
                 selectedMonth = data.months[p2]
                 result_month = viewModel.calcMonth(selectedMonth)
 
-
                 if (result_month == "mese") {
                     Log.d("Date State" , "Date inizializzata con successo")
                 } else {
                     viewModel.setMonth(selectedMonth)
                 }
-
-               if(viewModel.month.value!!.isNotEmpty()) {
-                   viewModel.calcCF(result_month)
-                   binding.LiveCFText.text = getString(R.string.CF_live_Data , viewModel.live_CF.value)
-                }
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -132,9 +123,16 @@ class getDate : Fragment() {
 
             if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty())  {
                 viewModel.showToast(requireContext() , "Riempire i campi" , 30)
-            } else {
-                findNavController().navigate(R.id.action_getDate_to_getSex)
+             } else if(errorDay == "ErrorDay"){
+            viewModel.showToast(requireContext() , "Giorno non valido" , 30)
+             }
+
+            else {
+                viewModel.calcCF(result_date)
                 viewModel.calcCF(result_month)
+                viewModel.calcCF(viewModel.day.value.toString())
+                findNavController().navigate(R.id.action_getDate_to_getSex)
+                Log.d("liveCfDate" , "${viewModel.live_CF.value}")
             }
 
             /*
