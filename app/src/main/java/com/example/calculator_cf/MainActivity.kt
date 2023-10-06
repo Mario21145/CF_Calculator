@@ -2,14 +2,9 @@ package com.example.calculator_cf
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.ActivityMainBinding
-import com.example.calculator_cf.databinding.FragmentHomeBinding
 
 class MainActivity : AppCompatActivity() {
 

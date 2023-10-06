@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -38,50 +39,36 @@ class getSex : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val radioGroup = binding.radioGroup
+        val numberButtons = radioGroup.childCount
 
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
-        var textMenRadio = binding.men.text.toString()
-        var textWomenRadio = binding.women.text.toString()
-
-        binding.radioGroup.setOnClickListener(){
-
-            val numButtons = radioGroup.childCount
-            var result = ""
-
-            for (i in 0 until numButtons) {
-                val radioButton = radioGroup.getChildAt(i) as RadioButton
-
-                if (radioButton.isSelected) {
-
-                    break
-                }
-            }
-
-
-        }
-
         binding.buttonSex.setOnClickListener() {
 
-            val numButtons = radioGroup.childCount
             var isActive = false
-
-            for (i in 0 until numButtons) {
+            for (i in 0 until numberButtons) {
                 val radioButton = radioGroup.getChildAt(i) as RadioButton
 
                 if (radioButton.isChecked) {
                     isActive = true
+                    viewModel.setSex(radioButton.text.toString())
+                    viewModel.calcSex(radioButton.text.toString())
                     break
                 }
             }
-
             if (isActive) {
+
+                Log.d("test", "${viewModel.sex.value}")
+                if(viewModel.sex.value!!.isNotEmpty()){
+                    viewModel.calcSex(viewModel.sex.value.toString())
+                    Log.d("liveCF" , "${viewModel.live_CF.value}")
+                }
+
                 findNavController().navigate(R.id.action_getSex_to_getCity)
             } else {
-                viewModel.showToast(requireContext() , "Selezionare il sesso" , 30)
+                viewModel.showToast(requireContext(), "Selezionare il sesso", 30)
             }
-
 
 
         }
