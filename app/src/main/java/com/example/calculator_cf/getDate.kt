@@ -21,19 +21,23 @@ import com.example.calculator_cf.databinding.FragmentGetDateBinding
 class getDate : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
+
     private lateinit var binding: FragmentGetDateBinding
     private lateinit var Date: String
     private lateinit var day: String
+
     private lateinit var selectedMonth: String
     private lateinit var result_date: String
     private lateinit var result_month: String
     private lateinit var result_day: String
 
+    private lateinit var initialDate :  String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_date, container, false)
         return binding.root
     }
@@ -42,34 +46,71 @@ class getDate : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
-        binding.appViewModel = AppViewModel()
-
         result_date = ""
         result_month = ""
         result_day = ""
 
-        val data = Dataset()
-        val button_date = binding.dateButton
+        selectedMonth = ""
         day = ""
 
 
+        val data = Dataset()
+        val button_date = binding.dateButton
+
+        binding.lifecycleOwner = this
+        binding.appViewModel = AppViewModel()
+
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
+
+
+
+
         //Date
+        Date = ""
+
+        initialDate = binding.date.text.toString()
+
+
+
         binding.date.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
                 Date = binding.date.text.toString()
                 result_date = viewModel.calcDate(Date)
-                binding.LiveCFText.text =
-                    getString(R.string.CF_live_Data, viewModel.live_CF.value + result_date)
+
+                if(Date.isEmpty()){
+                    binding.LiveCFText.text =
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value)
+                } else {
+                    viewModel.setDate(Date)
+                    binding.LiveCFText.text =
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_date)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
+
+                if(Date.length == 4){
+                    if(Date.isNotEmpty()){
+                        if(viewModel.date.value == Date){
+
+                        }
+                    }
+                }
+
             }
         })
+
+
+
+
+
+
+
+
 
 
         binding.day.addTextChangedListener(object : TextWatcher {
@@ -79,12 +120,21 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 day = binding.day.text.toString()
                 binding.LiveCFText.text =
-                    getString(R.string.CF_live_Data, viewModel.live_CF.value + viewModel.day.value)
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + day)
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
+
+
+
+
+
+
+
+
+
 
 
         //Spinner
@@ -103,8 +153,7 @@ class getDate : Fragment() {
                 result_month = viewModel.calcMonth(selectedMonth)
 
                 if (result_month != "mese") {
-                    binding.LiveCFText.text =
-                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
                 }
             }
 
@@ -114,6 +163,12 @@ class getDate : Fragment() {
 
         }
 
+        if(selectedMonth.isNotEmpty()){
+            viewModel.setCF(result_month)
+        }
+
+
+
 
 
         button_date.setOnClickListener {
@@ -121,9 +176,6 @@ class getDate : Fragment() {
             if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty()) {
                 viewModel.showToast(requireContext(), "Riempire i campi", 30)
             } else {
-                viewModel.setCF(result_date)
-                viewModel.setCF(result_month)
-                viewModel.setCF(viewModel.day.value.toString())
 
                 viewModel.setDate(Date)
                 viewModel.setDay(day.toInt())
