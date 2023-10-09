@@ -147,6 +147,13 @@ class AppViewModel : ViewModel() {
         }
     }
 
+    fun calcDay(day : String): String {
+        if(day.length == 2){
+            return day.takeLast(2)
+        }
+        return ""
+    }
+
 
     fun calcMonth(month: String): String {
         when (month) {

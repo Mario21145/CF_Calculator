@@ -31,7 +31,7 @@ class getDate : Fragment() {
     private lateinit var result_month: String
     private lateinit var result_day: String
 
-    private lateinit var initialDate :  String
+    private lateinit var initialDate: String
 
 
     override fun onCreateView(
@@ -63,8 +63,6 @@ class getDate : Fragment() {
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
 
-
-
         //Date
         Date = ""
 
@@ -81,7 +79,7 @@ class getDate : Fragment() {
                 Date = binding.date.text.toString()
                 result_date = viewModel.calcDate(Date)
 
-                if(Date.isEmpty()){
+                if (Date.isEmpty()) {
                     binding.LiveCFText.text =
                         getString(R.string.CF_live_Data, viewModel.live_CF.value)
                 } else {
@@ -93,16 +91,49 @@ class getDate : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
 
-                if(Date.length == 4){
-                    if(Date.isNotEmpty()){
-                        if(viewModel.date.value == Date){
-
-                        }
+                if (Date.length == 4) {
+                    if (Date.isNotEmpty()) {
+                        viewModel.setCF(result_date)
                     }
                 }
 
             }
         })
+
+
+//Spinner
+        val adapter =
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                data.months
+            )
+
+        binding.month.adapter = adapter
+        binding.month.setSelection(12)
+        binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                selectedMonth = data.months[p2]
+                result_month = viewModel.calcMonth(selectedMonth)
+
+                if (result_month != "mese") {
+                    binding.LiveCFText.text =
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
+                    viewModel.setCF(result_month)
+                }
+
+
+
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
 
 
 
@@ -119,11 +150,15 @@ class getDate : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 day = binding.day.text.toString()
+                result_day = viewModel.calcDay(day)
                 binding.LiveCFText.text =
-                    getString(R.string.CF_live_Data, viewModel.live_CF.value + day)
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + result_day)
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (day.length == 2) {
+                    viewModel.setCF( result_day)
+                }
             }
         })
 
@@ -136,36 +171,6 @@ class getDate : Fragment() {
 
 
 
-
-        //Spinner
-        val adapter =
-            ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                data.months
-            )
-        binding.month.adapter = adapter
-        binding.month.setSelection(12)
-        binding.month.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-                selectedMonth = data.months[p2]
-                result_month = viewModel.calcMonth(selectedMonth)
-
-                if (result_month != "mese") {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-        }
-
-        if(selectedMonth.isNotEmpty()){
-            viewModel.setCF(result_month)
-        }
 
 
 
