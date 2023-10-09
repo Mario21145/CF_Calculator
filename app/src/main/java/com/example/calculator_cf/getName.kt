@@ -51,7 +51,8 @@ class getName : Fragment() {
                 val nameUpperCase = name.map { it.uppercaseChar() }
                 name_list = nameUpperCase.toList()
                 resultName = viewModel.calcConsonants(name_list)
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + resultName)
+                binding.LiveCFText.text =
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + resultName)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -59,14 +60,10 @@ class getName : Fragment() {
         })
 
 
-
-
-
-
         button_name.setOnClickListener {
 
-            if(name.isEmpty()){
-                viewModel.showToast(requireContext() , "Il campo nome è vuoto" , 30)
+            if (name.isEmpty()) {
+                viewModel.showToast(requireContext(), "Il campo nome è vuoto", 30)
             } else {
                 viewModel.setName(binding.editTextText.text.toString())
                 viewModel.setCF(resultName)

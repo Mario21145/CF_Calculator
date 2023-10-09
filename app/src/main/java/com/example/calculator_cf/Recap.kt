@@ -33,10 +33,10 @@ class Recap : Fragment() {
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
-        binding.LiveCFText.text = getString(R.string.nameRecap, viewModel.live_CF.value + viewModel.name.value)
-        binding.LiveCFText.text = getString(R.string.surnameRecap, viewModel.live_CF.value + viewModel.surname.value)
-        binding.LiveCFText.text = getString(R.string.cityRecap, viewModel.live_CF.value + viewModel.city.value)
-        binding.LiveCFText.text = getString(R.string.dateRecap, viewModel.live_CF.value + viewModel.date.value)
+//        binding.LiveCFText.text = getString(R.string.nameRecap, viewModel.live_CF.value + viewModel.name.value)
+//        binding.LiveCFText.text = getString(R.string.surnameRecap, viewModel.live_CF.value + viewModel.surname.value)
+//        binding.LiveCFText.text = getString(R.string.cityRecap, viewModel.live_CF.value + viewModel.city.value)
+//        binding.LiveCFText.text = getString(R.string.dateRecap, viewModel.live_CF.value + viewModel.date.value)
 
     }
 

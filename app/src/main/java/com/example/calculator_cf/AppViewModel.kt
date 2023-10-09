@@ -20,15 +20,14 @@ class AppViewModel : ViewModel() {
         get() = _liveCF
 
     fun setCF(result: String) {
-        Log.d("liveCfViewModel", "${live_CF.value}")
 
+        Log.d("liveCfViewModel", "${live_CF.value}")
 
         if (_liveCF == MutableLiveData("")) {
             _liveCF.value = result
         } else {
             _liveCF.value = _liveCF.value + result
         }
-
 
     }
 
@@ -234,7 +233,7 @@ class AppViewModel : ViewModel() {
                 return "F839"
             }
         }
-        return "ErrorCity"
+        return ""
     }
 
     fun calcSex(sex: String) {

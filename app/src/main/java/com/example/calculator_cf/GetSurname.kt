@@ -57,9 +57,6 @@ class GetSurname : Fragment() {
                 if (binding.editTextSurname.text.isNotEmpty()) {
                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
                }
-
-  // branch main
-
             }
 
             override fun afterTextChanged(s: Editable?) {

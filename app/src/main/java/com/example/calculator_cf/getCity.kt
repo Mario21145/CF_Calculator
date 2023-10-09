@@ -42,7 +42,7 @@ class getCity : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
-        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
+        binding.LiveCFText.text =  viewModel.live_CF.value
 
         var data = Dataset()
 
@@ -51,6 +51,7 @@ class getCity : Fragment() {
             android.R.layout.simple_spinner_dropdown_item,
             data.cities
         )
+
         binding.cities.adapter = adapter
         binding.cities.setSelection(5)
         binding.cities.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -60,11 +61,8 @@ class getCity : Fragment() {
                 resultCity = viewModel.calcCity(selectedCity)
 
                 if (resultCity != "comune") {
-                    Log.d("City", "Comune inizializzato con successo")
-                } else {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + resultCity)
+                    binding.LiveCFText.text = viewModel.live_CF.value + resultCity
                 }
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
