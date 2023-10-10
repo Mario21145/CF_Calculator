@@ -2,6 +2,7 @@ package com.example.calculator_cf
 
 import android.content.Context
 import android.util.Log
+import android.util.Range
 
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -18,6 +19,31 @@ class AppViewModel : ViewModel() {
     private var _liveCF = MutableLiveData("")
     val live_CF: LiveData<String>
         get() = _liveCF
+
+
+    fun reset() {
+        _name = MutableLiveData("")
+        _surname = MutableLiveData("")
+        _date = MutableLiveData("")
+        _month = MutableLiveData("")
+        _day = MutableLiveData(0)
+        _city = MutableLiveData("")
+        _liveCF = MutableLiveData("")
+    }
+
+
+    fun updateCF(rangePosition: IntRange) {
+
+        val convertedLiveCf: MutableList<Char> = _liveCF.value?.toMutableList() ?: mutableListOf()
+        if (rangePosition.first in 0 until convertedLiveCf.size && rangePosition.last in 0 until convertedLiveCf.size) {
+            for (i in rangePosition) {
+                convertedLiveCf[i] = ' '
+            }
+            convertedLiveCf.removeAll { it == ' ' }
+            _liveCF.value = convertedLiveCf.joinToString("")
+
+        }
+    }
 
     fun setCF(result: String) {
 
@@ -146,8 +172,8 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun calcDay(day : String): String {
-        if(day.length == 2){
+    fun calcDay(day: String): String {
+        if (day.length == 2) {
             return day.takeLast(2)
         }
         return ""
@@ -238,21 +264,32 @@ class AppViewModel : ViewModel() {
 
     fun calcSex(sex: String) {
         if (sex == "uomo") {
-            Log.d("Sex", "Il sesso selezionato è uomo")
+            if(_day.value!! > 31){
+                _day.value = _day.value
+            }
         } else if (sex == "donna") {
             _day.value = _day.value!! + 40
         }
     }
 
 
-    fun calcLastLetter(cf: String): String {
+    fun calcLastLetter(CF : String): Char {
+        if(CF.length == 15) {
+            var sum = 0
+            for ((index, char) in CF.withIndex()) {
+                if (index % 2 == 0) {
+                    sum += data.evenValues[char] ?: 0
+                } else {
+                    sum += data.oddValues[char] ?: 0
+                }
+            }
 
-        var sum = 0
-        for (i in 0..15) {
-            //sum = sum + data.LastLetterCalc[cf[i]]!!
+            val controlValue = sum % 26
+            val controlChar = data.letterValues.entries.first { it.value == controlValue }.key
+
+            return controlChar
         }
-        sum % 26
-        return sum.toString()
+        return 'X'
     }
 
 

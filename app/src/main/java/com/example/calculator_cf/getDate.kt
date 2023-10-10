@@ -31,7 +31,7 @@ class getDate : Fragment() {
     private lateinit var result_month: String
     private lateinit var result_day: String
 
-    private lateinit var initialDate: String
+    private lateinit var textDate: String
 
 
     override fun onCreateView(
@@ -53,21 +53,20 @@ class getDate : Fragment() {
         selectedMonth = ""
         day = ""
 
+        textDate = ""
+
 
         val data = Dataset()
         val button_date = binding.dateButton
+        val returnName = binding.returnName
 
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
-
         //Date
         Date = ""
-
-        initialDate = binding.date.text.toString()
-
 
 
         binding.date.addTextChangedListener(object : TextWatcher {
@@ -79,29 +78,31 @@ class getDate : Fragment() {
                 Date = binding.date.text.toString()
                 result_date = viewModel.calcDate(Date)
 
+                textDate = result_date
+
                 if (Date.isEmpty()) {
                     binding.LiveCFText.text =
                         getString(R.string.CF_live_Data, viewModel.live_CF.value)
                 } else {
                     viewModel.setDate(Date)
                     binding.LiveCFText.text =
-                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_date)
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate)
                 }
             }
 
             override fun afterTextChanged(s: Editable?) {
 
-                if (Date.length == 4) {
-                    if (Date.isNotEmpty()) {
-                        viewModel.setCF(result_date)
-                    }
-                }
+//                if (Date.length == 4) {
+//                    if (Date.isNotEmpty()) {
+//                        viewModel.setCF(result_date)
+//                    }
+//                }
 
             }
         })
 
 
-//Spinner
+        //Spinner
         val adapter =
             ArrayAdapter(
                 requireContext(),
@@ -117,14 +118,12 @@ class getDate : Fragment() {
                 selectedMonth = data.months[p2]
                 result_month = viewModel.calcMonth(selectedMonth)
 
+                textDate = textDate + result_month
+
                 if (result_month != "mese") {
                     binding.LiveCFText.text =
-                        getString(R.string.CF_live_Data, viewModel.live_CF.value + result_month)
-                    viewModel.setCF(result_month)
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate)
                 }
-
-
-
 
 
             }
@@ -151,14 +150,17 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 day = binding.day.text.toString()
                 result_day = viewModel.calcDay(day)
+
+                textDate = textDate + result_day
+
                 binding.LiveCFText.text =
-                    getString(R.string.CF_live_Data, viewModel.live_CF.value + result_day)
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate)
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (day.length == 2) {
-                    viewModel.setCF( result_day)
-                }
+//                if (day.length == 2) {
+//                    viewModel.setCF(result_day)
+//                }
             }
         })
 
@@ -181,6 +183,8 @@ class getDate : Fragment() {
             if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty()) {
                 viewModel.showToast(requireContext(), "Riempire i campi", 30)
             } else {
+                viewModel.setCF(result_date)
+                viewModel.setCF(result_month)
 
                 viewModel.setDate(Date)
                 viewModel.setDay(day.toInt())
@@ -189,6 +193,11 @@ class getDate : Fragment() {
                 Log.d("liveCfDate", "${viewModel.live_CF.value}")
             }
 
+        }
+
+        returnName.setOnClickListener() {
+            viewModel.updateCF(3..5)
+            findNavController().navigate(R.id.action_getDate_to_getName)
         }
 
     }

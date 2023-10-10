@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,23 +24,39 @@ class GetSurname : Fragment() {
     private lateinit var result: String
     private lateinit var surname: String
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_surname, container, false)
+        binding.editTextSurname.requestFocus()
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.appViewModel = AppViewModel()
+        binding.appViewModel = viewModel
+
+        Log.d("View" , "${view}")
+
+        binding.editTextSurname.requestFocus()
+
+        view.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+                Log.d("D" , "Action Executed")
+                viewModel.updateCF(0..2)
+                viewModel.setName("")
+                binding.editTextSurname.text.clear()
+                return@setOnKeyListener true
+            }
+            false
+        }
+
 
         surname = ""
         val button_surname = binding.buttonSurname
+        val buttonHome = binding.returnHome
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
@@ -73,8 +90,13 @@ class GetSurname : Fragment() {
                 findNavController().navigate(R.id.action_getSurname_to_getName)
             }
         }
-    }
 
+//        buttonHome.setOnClickListener(){
+//            viewModel.reset()
+//            viewModel.showToast(requireContext() , "Variabili resettate" , 30)
+//            findNavController().navigate(R.id.action_getSurname_to_home)
+//        }
+    }
 
     companion object {
         @JvmStatic

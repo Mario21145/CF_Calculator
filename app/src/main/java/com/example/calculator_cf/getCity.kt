@@ -28,6 +28,7 @@ class getCity : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -41,6 +42,10 @@ class getCity : Fragment() {
 
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
+
+
+        var buttonCity = binding.buttonCity
+        var returnSex = binding.ReturnSex
 
         binding.LiveCFText.text =  viewModel.live_CF.value
 
@@ -70,15 +75,32 @@ class getCity : Fragment() {
 
         }
 
-        binding.buttonCity.setOnClickListener() {
+        buttonCity.setOnClickListener() {
             if (resultCity.isEmpty()) {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
                 viewModel.setCF(resultCity)
+                var resultLastLetter = viewModel.live_CF.value?.let { it1 ->
+                    viewModel.calcLastLetter(
+                        it1
+                    )
+                }
+                viewModel.setCF(resultLastLetter.toString())
+                viewModel.setCity(resultCity)
+//              var r = viewModel.calcLastLetter()
+//              viewModel.setCF()
+
                 Log.d("liveCfCity" , "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getCity_to_recap)
             }
         }
+
+        returnSex.setOnClickListener(){
+            viewModel.updateCF(9..10)
+            viewModel.setSex("")
+        }
+
+
 
     }
 

@@ -44,11 +44,41 @@ class getSex : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
+        var state = false
+
+
+        var menButtonRadio = binding.men
+        var womenButtonRadio = binding.women
+
+
+        val buttonSex = binding.buttonSex
+        val returnDate = binding.returnDate
+
+
+
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
 
+        menButtonRadio.setOnClickListener(){
+            if(!state){
+                if(viewModel.day.value!! > 31 ){
+                    viewModel.setDay(viewModel.day.value?.minus(40) ?: 0)
+                }
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + viewModel.day.value.toString().padStart(2, '0'))
+            }
+        }
 
-        binding.buttonSex.setOnClickListener() {
+        womenButtonRadio.setOnClickListener(){
+
+            if(!state){
+                viewModel.setDay(viewModel.day.value?.plus(40) ?: 0)
+                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + viewModel.day.value.toString().padStart(2, '0'))
+                state = true
+            }
+        }
+
+
+        buttonSex.setOnClickListener() {
 
             var isActive = false
             for (i in 0 until numberButtons) {
@@ -64,16 +94,28 @@ class getSex : Fragment() {
             if (isActive) {
                 Log.d("test", "${viewModel.sex.value}")
                 if(viewModel.sex.value!!.isNotEmpty()){
-                    viewModel.calcSex(viewModel.sex.value.toString())
+                    viewModel.setCF(viewModel.day.value.toString().padStart(2 , '0'))
                     Log.d("liveCfSex" , "${viewModel.live_CF.value}")
                 }
                 findNavController().navigate(R.id.action_getSex_to_getCity)
             } else {
                 viewModel.showToast(requireContext(), "Selezionare il sesso", 30)
             }
-
-
         }
+
+        returnDate.setOnClickListener(){
+            viewModel.updateCF(6..8)
+
+            viewModel.setDate("")
+            viewModel.setMonth("")
+            viewModel.setDay(0)
+
+            findNavController().navigate(R.id.action_getSex_to_getDate)
+        }
+
+
+
+
 
 
     }

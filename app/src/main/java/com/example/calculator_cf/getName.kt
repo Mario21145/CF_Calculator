@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +26,24 @@ class getName : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
+
+        view?.isFocusableInTouchMode = true
+        view?.requestFocus()
+
+        view?.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                viewModel.updateCF(3..5)
+                viewModel.setName("")
+
+                return@setOnKeyListener true
+            }
+
+            false
+        }
+
         return binding.root
     }
 
@@ -39,6 +56,7 @@ class getName : Fragment() {
         name = ""
 
         val button_name = binding.buttonName
+        val buttonReturnName = binding.returnSurname
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
@@ -72,6 +90,12 @@ class getName : Fragment() {
             }
 
         }
+
+//        buttonReturnName.setOnClickListener(){
+//            viewModel.updateCF(0..2)
+//            viewModel.setName("")
+//            findNavController().navigate(R.id.action_getName_to_getSurname)
+//        }
 
     }
 

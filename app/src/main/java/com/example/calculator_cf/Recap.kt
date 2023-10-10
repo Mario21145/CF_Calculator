@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetCityBinding
 import com.example.calculator_cf.databinding.FragmentRecapBinding
 
@@ -15,7 +16,6 @@ class Recap : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentRecapBinding
-
 
 
     override fun onCreateView(
@@ -31,12 +31,28 @@ class Recap : Fragment() {
         binding.lifecycleOwner = this
         binding.appViewModel = AppViewModel()
 
-        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
+        var buttonRecap = binding.buttonSurname
 
-//        binding.LiveCFText.text = getString(R.string.nameRecap, viewModel.live_CF.value + viewModel.name.value)
-//        binding.LiveCFText.text = getString(R.string.surnameRecap, viewModel.live_CF.value + viewModel.surname.value)
-//        binding.LiveCFText.text = getString(R.string.cityRecap, viewModel.live_CF.value + viewModel.city.value)
-//        binding.LiveCFText.text = getString(R.string.dateRecap, viewModel.live_CF.value + viewModel.date.value)
+        binding.liveCFText.text = viewModel.live_CF.value
+
+        binding.recapSurname.text = getString(R.string.surnameRecap, viewModel.surname.value)
+        binding.recapName.text = getString(R.string.nameRecap, viewModel.name.value)
+        binding.recapDate.text = getString(R.string.dateRecap, viewModel.date.value)
+        binding.recapMonth.text = getString(R.string.monthRecap, viewModel.month.value)
+
+        if(viewModel.day.value!! > 31){
+            viewModel.setDay(viewModel.day.value!!.minus(40))
+            binding.recapDay.text = getString(R.string.dayRecap, viewModel.day.value.toString())
+        } else {
+            binding.recapDay.text = getString(R.string.dayRecap, viewModel.day.value.toString())
+        }
+        binding.recapSex.text = getString(R.string.sexRecap , viewModel.sex.value)
+        binding.recapCity.text = getString(R.string.cityRecap, viewModel.city.value)
+
+        buttonRecap.setOnClickListener(){
+            viewModel.reset()
+            findNavController().navigate(R.id.action_recap_to_home)
+        }
 
     }
 
