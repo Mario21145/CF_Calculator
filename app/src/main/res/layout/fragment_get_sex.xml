@@ -47,54 +47,53 @@
                 android:id="@+id/radioGroup"
                 android:layout_width="141dp"
                 android:layout_height="129dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="144dp"
+                app:layout_constraintBottom_toTopOf="@+id/returnDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.24">
+                app:layout_constraintVertical_bias="0.006">
 
                 <RadioButton
                     android:id="@+id/men"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/men"
-                    android:textAlignment="center"
-                    />
+                    android:textAlignment="center" />
 
                 <RadioButton
                     android:id="@+id/women"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/women"
-                    android:textAlignment="center"
-                    />
+                    android:textAlignment="center" />
             </RadioGroup>
 
             <Button
                 android:id="@+id/button_sex"
                 android:layout_width="126dp"
                 android:layout_height="48dp"
-                android:layout_marginBottom="204dp"
+                android:layout_marginBottom="80dp"
                 android:text="@string/Go_Button"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.754"
+                app:layout_constraintHorizontal_bias="0.764"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/returnDate"
                 android:layout_width="126dp"
                 android:layout_height="48dp"
-                android:layout_marginBottom="204dp"
+                android:layout_marginBottom="80dp"
                 android:text="indietro"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.263"
+                app:layout_constraintHorizontal_bias="0.273"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

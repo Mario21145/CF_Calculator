@@ -112,8 +112,8 @@ class AppViewModel : ViewModel() {
     //Logic getName
     fun calcConsonants(name: List<Char>): String {
         var char_result = mutableListOf<Char>()
-        var c = mutableListOf<Char>()
-        var v = mutableListOf<Char>()
+        val c = mutableListOf<Char>()
+        val v = mutableListOf<Char>()
 
         for (letterName in name) {
             if (data.consonants.contains(letterName)) {
@@ -132,7 +132,7 @@ class AppViewModel : ViewModel() {
         }
 
 
-        var maxLenghtChar = 3
+        val maxLenghtChar = 3
 
         if (!v.isEmpty()) {
             if (c.size != maxLenghtChar) {
@@ -150,13 +150,8 @@ class AppViewModel : ViewModel() {
                 }
             }
         }
-
-        var result = char_result.joinToString("")
-
-
+        val result = char_result.joinToString("")
         return result
-
-
     }
 
 
@@ -169,8 +164,8 @@ class AppViewModel : ViewModel() {
     }
 
     fun calcDay(day: String): String {
-        if (day.length == 2 && day < 31.toString()) {
-            return day.takeLast(2)
+        if (day.length == 2 && day <= 31.toString()) {
+            return day
         }
         return ""
     }
