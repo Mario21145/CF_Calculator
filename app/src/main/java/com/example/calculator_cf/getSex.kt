@@ -41,31 +41,29 @@ class getSex : Fragment() {
         val radioGroup = binding.radioGroup
         val numberButtons = radioGroup.childCount
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
         var state = false
 
-
         var menButtonRadio = binding.men
         var womenButtonRadio = binding.women
 
-
         val buttonSex = binding.buttonSex
         val returnDate = binding.returnDate
-
 
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
 
         menButtonRadio.setOnClickListener(){
-            if(!state){
+
                 if(viewModel.day.value!! > 31 ){
                     viewModel.setDay(viewModel.day.value?.minus(40) ?: 0)
+                    state = false
                 }
                 binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + viewModel.day.value.toString().padStart(2, '0'))
-            }
+
         }
 
         womenButtonRadio.setOnClickListener(){

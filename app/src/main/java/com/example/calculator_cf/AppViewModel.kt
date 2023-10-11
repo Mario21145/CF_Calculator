@@ -2,7 +2,6 @@ package com.example.calculator_cf
 
 import android.content.Context
 import android.util.Log
-import android.util.Range
 
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -138,7 +137,6 @@ class AppViewModel : ViewModel() {
 
         if (!v.isEmpty()) {
             if (c.size != maxLenghtChar) {
-                //Log.d("position" , "$position")
                 when (c.size) {
                     0 -> char_result = c.plus(v).toMutableList()
                     1 -> {
@@ -163,7 +161,6 @@ class AppViewModel : ViewModel() {
     }
 
 
-    //GetDate Fragment
     fun calcDate(date: String): String {
         if (date.length == 4) {
             return date.takeLast(2)
@@ -273,10 +270,10 @@ class AppViewModel : ViewModel() {
     }
 
 
-    fun calcLastLetter(CF : String): Char {
-        if(CF.length == 15) {
+    fun calcLastLetter(cf: String?): String {
+        if(cf?.length == 15) {
             var sum = 0
-            for ((index, char) in CF.withIndex()) {
+            for ((index, char) in cf.withIndex()) {
                 if (index % 2 == 0) {
                     sum += data.evenValues[char] ?: 0
                 } else {
@@ -287,9 +284,9 @@ class AppViewModel : ViewModel() {
             val controlValue = sum % 26
             val controlChar = data.letterValues.entries.first { it.value == controlValue }.key
 
-            return controlChar
+            return controlChar.toString()
         }
-        return 'X'
+        return ""
     }
 
 

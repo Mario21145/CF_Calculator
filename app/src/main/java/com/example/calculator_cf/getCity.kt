@@ -40,7 +40,7 @@ class getCity : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
 
@@ -63,6 +63,7 @@ class getCity : Fragment() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 selectedCity = data.cities[p2]
+                viewModel.setCity(selectedCity)
                 resultCity = viewModel.calcCity(selectedCity)
 
                 if (resultCity != "comune") {
@@ -80,19 +81,12 @@ class getCity : Fragment() {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
                 viewModel.setCF(resultCity)
-                var resultLastLetter = viewModel.live_CF.value?.let { it1 ->
-                    viewModel.calcLastLetter(
-                        it1
-                    )
-                }
-                viewModel.setCF(resultLastLetter.toString())
-                viewModel.setCity(resultCity)
-//              var r = viewModel.calcLastLetter()
-//              viewModel.setCF()
-
+                val resultLastLetter = viewModel.calcLastLetter(viewModel.live_CF.value)
+                viewModel.setCF(resultLastLetter)
                 Log.d("liveCfCity" , "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getCity_to_recap)
-            }
+                }
+
         }
 
         returnSex.setOnClickListener(){

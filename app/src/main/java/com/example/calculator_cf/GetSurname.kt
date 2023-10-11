@@ -5,15 +5,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetSurnameBinding
 
@@ -25,10 +23,9 @@ class GetSurname : Fragment() {
     private lateinit var surname: String
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_surname, container, false)
-        binding.editTextSurname.requestFocus()
         return binding.root
     }
 
@@ -36,21 +33,23 @@ class GetSurname : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.appViewModel = viewModel
+        binding.appViewModel = AppViewModel()
 
-        Log.d("View" , "${view}")
+        Log.d("viewOnViewCreated", "${view}")
 
-        binding.editTextSurname.requestFocus()
 
-        view.setOnKeyListener { _, keyCode, event ->
+        view.requestFocus()
+        Log.d("Focus", "${view.hasFocus()}")
+
+        view.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
-                Log.d("D" , "Action Executed")
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
                 viewModel.updateCF(0..2)
                 viewModel.setName("")
                 binding.editTextSurname.text.clear()
                 return@setOnKeyListener true
             }
-            false
+            return@setOnKeyListener false
         }
 
 
@@ -72,8 +71,8 @@ class GetSurname : Fragment() {
                 result = viewModel.calcConsonants(surname_list)
 
                 if (binding.editTextSurname.text.isNotEmpty()) {
-                   binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
-               }
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -81,8 +80,8 @@ class GetSurname : Fragment() {
         })
 
         button_surname.setOnClickListener() {
-            if(surname.isEmpty()){
-                viewModel.showToast(requireContext(), "Il campo cognome è vuoto" , 30 )
+            if (surname.isEmpty()) {
+                viewModel.showToast(requireContext(), "Il campo cognome è vuoto", 30)
             } else {
                 Log.d("liveCfSurname", viewModel.live_CF.value.toString())
                 viewModel.setCF(result)
@@ -91,11 +90,11 @@ class GetSurname : Fragment() {
             }
         }
 
-//        buttonHome.setOnClickListener(){
-//            viewModel.reset()
-//            viewModel.showToast(requireContext() , "Variabili resettate" , 30)
-//            findNavController().navigate(R.id.action_getSurname_to_home)
-//        }
+        buttonHome.setOnClickListener() {
+            viewModel.reset()
+            viewModel.showToast(requireContext(), "Variabili resettate", 30)
+            findNavController().navigate(R.id.action_getSurname_to_home)
+        }
     }
 
     companion object {

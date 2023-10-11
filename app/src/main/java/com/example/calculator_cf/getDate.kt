@@ -60,7 +60,7 @@ class getDate : Fragment() {
         val button_date = binding.dateButton
         val returnName = binding.returnName
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)

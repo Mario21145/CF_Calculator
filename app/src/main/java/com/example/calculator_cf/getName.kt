@@ -29,21 +29,6 @@ class getName : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
 
-        view?.isFocusableInTouchMode = true
-        view?.requestFocus()
-
-        view?.setOnKeyListener { _, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-
-                viewModel.updateCF(3..5)
-                viewModel.setName("")
-
-                return@setOnKeyListener true
-            }
-
-            false
-        }
-
         return binding.root
     }
 
@@ -54,6 +39,17 @@ class getName : Fragment() {
         binding.appViewModel = AppViewModel()
 
         name = ""
+
+        view.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+                viewModel.updateCF(0..2)
+                viewModel.setName("")
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
+
 
         val button_name = binding.buttonName
         val buttonReturnName = binding.returnSurname
@@ -91,11 +87,11 @@ class getName : Fragment() {
 
         }
 
-//        buttonReturnName.setOnClickListener(){
-//            viewModel.updateCF(0..2)
-//            viewModel.setName("")
-//            findNavController().navigate(R.id.action_getName_to_getSurname)
-//        }
+        buttonReturnName.setOnClickListener(){
+            viewModel.updateCF(0..2)
+            viewModel.setName("")
+            findNavController().navigate(R.id.action_getName_to_getSurname)
+        }
 
     }
 
