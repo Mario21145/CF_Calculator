@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -28,10 +29,11 @@ class getCity : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_city, container, false)
         return binding.root
     }
@@ -39,32 +41,47 @@ class getCity : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
-        binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
-        var data = Dataset()
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+                viewModel.updateCF(9..10)
+
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
+
+        val buttonCity = binding.buttonCity
+        val returnSex = binding.ReturnSex
+
+        binding.LiveCFText.text =  viewModel.live_CF.value
+
+        val data = Dataset()
 
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
             data.cities
         )
+
         binding.cities.adapter = adapter
         binding.cities.setSelection(5)
         binding.cities.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 selectedCity = data.cities[p2]
+                viewModel.setCity(selectedCity)
                 resultCity = viewModel.calcCity(selectedCity)
 
                 if (resultCity != "comune") {
-                    Log.d("City", "Comune inizializzato con successo")
-                } else {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + resultCity)
+                    binding.LiveCFText.text = viewModel.live_CF.value + resultCity
                 }
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -72,15 +89,25 @@ class getCity : Fragment() {
 
         }
 
-        binding.buttonCity.setOnClickListener() {
+        buttonCity.setOnClickListener() {
             if (resultCity.isEmpty()) {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
                 viewModel.setCF(resultCity)
+                val resultLastLetter = viewModel.calcLastLetter(viewModel.live_CF.value)
+                viewModel.setCF(resultLastLetter)
                 Log.d("liveCfCity" , "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getCity_to_recap)
-            }
+                }
+
         }
+
+        returnSex.setOnClickListener(){
+            viewModel.updateCF(9..10)
+            viewModel.setSex("")
+        }
+
+
 
     }
 

@@ -23,6 +23,9 @@
     <string name="nameRecap">Il tuo nome è: %s</string>
     <string name="surnameRecap">Il tuo cognome è: %s</string>
     <string name="dateRecap">Data di nascita: %s</string>
+    <string name="monthRecap">Mese di nascita: %s</string>
+    <string name="dayRecap">Giorno di nascita: %s</string>
+    <string name="sexRecap">Sesso: %s</string>
     <string name="cityRecap">Luogo di nascita: %s</string>
 
 

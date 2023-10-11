@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
-
 
 class getName : Fragment() {
 
@@ -22,11 +21,10 @@ class getName : Fragment() {
     private lateinit var name: String
     private lateinit var name_list: List<Char>
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
+    ): View {
+        binding = FragmentGetNameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,7 +36,19 @@ class getName : Fragment() {
 
         name = ""
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+                viewModel.updateCF(0..2)
+                viewModel.setName("")
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
         val button_name = binding.buttonName
+        val buttonReturnName = binding.returnSurname
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
@@ -51,40 +61,29 @@ class getName : Fragment() {
                 val nameUpperCase = name.map { it.uppercaseChar() }
                 name_list = nameUpperCase.toList()
                 resultName = viewModel.calcConsonants(name_list)
-                binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + resultName)
+                binding.LiveCFText.text =
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + resultName)
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         })
 
-
-
-
-
-
         button_name.setOnClickListener {
-
-            if(name.isEmpty()){
-                viewModel.showToast(requireContext() , "Il campo nome è vuoto" , 30)
+            if (name.isEmpty()) {
+                viewModel.showToast(requireContext(), "Il campo nome è vuoto", 30)
             } else {
                 viewModel.setName(binding.editTextText.text.toString())
                 viewModel.setCF(resultName)
                 Log.d("liveCfGetName", "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getName_to_getDate)
             }
-
         }
 
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            getName().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+        buttonReturnName.setOnClickListener {
+            viewModel.updateCF(0..2)
+            viewModel.setName("")
+            findNavController().popBackStack()
+        }
     }
 }

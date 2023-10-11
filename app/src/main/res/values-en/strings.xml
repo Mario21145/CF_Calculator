@@ -13,6 +13,10 @@
     <string name="Error_Date">Lenght not valid</string>
     <string name="women">women</string>
     <string name="nameRecap">Your name is : %s</string>
+    <string name="surnameRecap">Your surname is : %s</string>
     <string name="dateRecap">Your date is : %s</string>
     <string name="cityRecap">Place of birth : %s</string>
+    <string name="monthRecap">Your birth month is : %s</string>
+    <string name="dayRecap">Your day birth is : %s</string>
+    <string name="sexRecap">Sex : %s</string>
 </resources>
