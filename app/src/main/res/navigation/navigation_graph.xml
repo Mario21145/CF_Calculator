@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_getName_to_getDate"
             app:destination="@id/getDate" />
+        <action
+            android:id="@+id/action_getName_to_getSurname"
+            app:destination="@id/getSurname" />
     </fragment>
     <fragment
         android:id="@+id/getSurname"
@@ -31,6 +34,9 @@
         <action
             android:id="@+id/action_getSurname_to_getName"
             app:destination="@id/getName" />
+        <action
+            android:id="@+id/action_getSurname_to_home"
+            app:destination="@id/home" />
     </fragment>
     <fragment
         android:id="@+id/getDate"
@@ -39,6 +45,9 @@
         <action
             android:id="@+id/action_getDate_to_getSex"
             app:destination="@id/getSex" />
+        <action
+            android:id="@+id/action_getDate_to_getName"
+            app:destination="@id/getName" />
     </fragment>
     <fragment
         android:id="@+id/getSex"
@@ -48,6 +57,9 @@
         <action
             android:id="@+id/action_getSex_to_getCity"
             app:destination="@id/getCity" />
+        <action
+            android:id="@+id/action_getSex_to_getDate"
+            app:destination="@id/getDate" />
     </fragment>
     <fragment
         android:id="@+id/getCity"
@@ -57,6 +69,9 @@
         <action
             android:id="@+id/action_getCity_to_recap"
             app:destination="@id/recap" />
+        <action
+            android:id="@+id/action_getCity_to_getSex"
+            app:destination="@id/getSex" />
     </fragment>
     <fragment
         android:id="@+id/recap"
@@ -65,6 +80,9 @@
         <action
             android:id="@+id/action_recap_to_home"
             app:destination="@id/home" />
+        <action
+            android:id="@+id/action_recap_to_getCity"
+            app:destination="@id/getCity" />
     </fragment>
 
 

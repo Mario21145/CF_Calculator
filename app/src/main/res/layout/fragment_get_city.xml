@@ -19,11 +19,22 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/Show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Il tuo codice fiscale è"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
                 android:id="@+id/Live_CF_Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:text = "@{AppViewModel.live_CF}"
+                android:layout_marginTop="76dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,10 +75,25 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.768"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cities"
-                app:layout_constraintVertical_bias="0.993" />
+                app:layout_constraintVertical_bias="0.196" />
+
+            <Button
+                android:id="@+id/ReturnSex"
+                android:layout_width="126dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="60dp"
+                android:text="indietro"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.231"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cities"
+                app:layout_constraintVertical_bias="0.196" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

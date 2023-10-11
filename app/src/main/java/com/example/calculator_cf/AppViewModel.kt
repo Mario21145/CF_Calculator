@@ -19,16 +19,39 @@ class AppViewModel : ViewModel() {
     val live_CF: LiveData<String>
         get() = _liveCF
 
-    fun setCF(result: String) {
-        Log.d("liveCfViewModel", "${live_CF.value}")
 
+    fun reset() {
+        _name = MutableLiveData("")
+        _surname = MutableLiveData("")
+        _date = MutableLiveData("")
+        _month = MutableLiveData("")
+        _day = MutableLiveData(0)
+        _city = MutableLiveData("")
+        _liveCF = MutableLiveData("")
+    }
+
+
+    fun updateCF(rangePosition: IntRange) {
+
+        val convertedLiveCf: MutableList<Char> = _liveCF.value?.toMutableList() ?: mutableListOf()
+        if (rangePosition.first in 0 until convertedLiveCf.size && rangePosition.last in 0 until convertedLiveCf.size) {
+            for (i in rangePosition) {
+                convertedLiveCf[i] = ' '
+            }
+            convertedLiveCf.removeAll { it == ' ' }
+            _liveCF.value = convertedLiveCf.joinToString("")
+        }
+    }
+
+    fun setCF(result: String) {
+
+        Log.d("liveCfViewModel", "${live_CF.value}")
 
         if (_liveCF == MutableLiveData("")) {
             _liveCF.value = result
         } else {
             _liveCF.value = _liveCF.value + result
         }
-
 
     }
 
@@ -113,7 +136,6 @@ class AppViewModel : ViewModel() {
 
         if (!v.isEmpty()) {
             if (c.size != maxLenghtChar) {
-                //Log.d("position" , "$position")
                 when (c.size) {
                     0 -> char_result = c.plus(v).toMutableList()
                     1 -> {
@@ -138,7 +160,6 @@ class AppViewModel : ViewModel() {
     }
 
 
-    //GetDate Fragment
     fun calcDate(date: String): String {
         if (date.length == 4) {
             return date.takeLast(2)
@@ -147,8 +168,8 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun calcDay(day : String): String {
-        if(day.length == 2){
+    fun calcDay(day: String): String {
+        if (day.length == 2 && day < 31.toString()) {
             return day.takeLast(2)
         }
         return ""
@@ -234,26 +255,26 @@ class AppViewModel : ViewModel() {
                 return "F839"
             }
         }
-        return "ErrorCity"
+        return ""
     }
 
-    fun calcSex(sex: String) {
-        if (sex == "uomo") {
-            Log.d("Sex", "Il sesso selezionato è uomo")
-        } else if (sex == "donna") {
-            _day.value = _day.value!! + 40
+    fun calcLastLetter(cf: String?): String {
+        if(cf?.length == 15) {
+            var sum = 0
+            for ((index, char) in cf.withIndex()) {
+                if (index % 2 == 0) {
+                    sum += data.evenValues[char] ?: 0
+                } else {
+                    sum += data.oddValues[char] ?: 0
+                }
+            }
+
+            val controlValue = sum % 26
+            val controlChar = data.letterValues.entries.first { it.value == controlValue }.key
+
+            return controlChar.toString()
         }
-    }
-
-
-    fun calcLastLetter(cf: String): String {
-
-        var sum = 0
-        for (i in 0..15) {
-            //sum = sum + data.LastLetterCalc[cf[i]]!!
-        }
-        sum % 26
-        return sum.toString()
+        return ""
     }
 
 
