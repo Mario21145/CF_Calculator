@@ -180,15 +180,16 @@ class getDate : Fragment() {
             if (day.isEmpty() || Date.isEmpty() || selectedMonth.isEmpty()) {
                 viewModel.showToast(requireContext(), "Riempire i campi", 30)
             } else {
-                viewModel.setCF(result_date)
-                viewModel.setCF(result_month)
-
-                viewModel.setDate(Date)
-                viewModel.setMonth(selectedMonth)
                 if(result_day.isEmpty()){
                     viewModel.showToast(requireContext() , "Data non valida" , 30)
                 } else {
+                    viewModel.setCF(result_date)
+                    viewModel.setCF(result_month)
+
+                    viewModel.setDate(Date)
+                    viewModel.setMonth(selectedMonth)
                     viewModel.setDay(day.toInt())
+
                     findNavController().navigate(R.id.action_getDate_to_getSex)
                     Log.d("liveCfDate", "${viewModel.live_CF.value}")
                 }

@@ -34,14 +34,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.414"
+                app:layout_constraintVertical_bias="0.0"
                 tools:text="@string/CF_live_Data" />
 
             <EditText
                 android:id="@+id/editText_Surname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="320dp"
+                android:layout_marginTop="340dp"
                 android:ems="10"
                 android:hint="@string/surname"
                 android:inputType="text"
@@ -56,29 +56,31 @@
                 android:id="@+id/button_surname"
                 android:layout_width="126dp"
                 android:layout_height="48dp"
-                android:layout_marginBottom="92dp"
+                android:layout_marginBottom="80dp"
                 android:text="Vai"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.757"
+                app:layout_constraintHorizontal_bias="0.803"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_Surname" />
+                app:layout_constraintTop_toBottomOf="@+id/editText_Surname"
+                app:layout_constraintVertical_bias="1.0" />
 
             <Button
                 android:id="@+id/returnHome"
                 android:layout_width="126dp"
                 android:layout_height="48dp"
-                android:layout_marginBottom="92dp"
+                android:layout_marginBottom="80dp"
                 android:text="indietro"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.256"
+                app:layout_constraintHorizontal_bias="0.235"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_Surname" />
+                app:layout_constraintTop_toBottomOf="@+id/editText_Surname"
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
