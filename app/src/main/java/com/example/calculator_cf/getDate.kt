@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -32,6 +33,8 @@ class getDate : Fragment() {
     private lateinit var result_day: String
 
     private lateinit var textDate: String
+    private lateinit var textMonth: String
+    private lateinit var textDay: String
 
 
     override fun onCreateView(
@@ -54,6 +57,23 @@ class getDate : Fragment() {
         day = ""
 
         textDate = ""
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+
+                viewModel.updateCF(3..5)
+
+                viewModel.setDate("")
+                viewModel.setMonth("")
+                viewModel.setCity("")
+
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
 
 
         val data = Dataset()
@@ -91,13 +111,6 @@ class getDate : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
-//                if (Date.length == 4) {
-//                    if (Date.isNotEmpty()) {
-//                        viewModel.setCF(result_date)
-//                    }
-//                }
-
             }
         })
 
@@ -118,11 +131,11 @@ class getDate : Fragment() {
                 selectedMonth = data.months[p2]
                 result_month = viewModel.calcMonth(selectedMonth)
 
-                textDate = textDate + result_month
+                textMonth = result_month
 
                 if (result_month != "mese") {
                     binding.LiveCFText.text =
-                        getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate)
+                        getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate + textMonth)
                 }
 
 
@@ -150,30 +163,14 @@ class getDate : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 day = binding.day.text.toString()
                 result_day = viewModel.calcDay(day)
-
-                textDate = textDate + result_day
-
+                textDay = result_day
                 binding.LiveCFText.text =
-                    getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate)
+                    getString(R.string.CF_live_Data, viewModel.live_CF.value + textDate + textMonth + textDay)
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                if (day.length == 2) {
-//                    viewModel.setCF(result_day)
-//                }
             }
         })
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -187,17 +184,21 @@ class getDate : Fragment() {
                 viewModel.setCF(result_month)
 
                 viewModel.setDate(Date)
-                viewModel.setDay(day.toInt())
                 viewModel.setMonth(selectedMonth)
-                findNavController().navigate(R.id.action_getDate_to_getSex)
-                Log.d("liveCfDate", "${viewModel.live_CF.value}")
+                if(result_day.isEmpty()){
+                    viewModel.showToast(requireContext() , "Data non valida" , 30)
+                } else {
+                    viewModel.setDay(day.toInt())
+                    findNavController().navigate(R.id.action_getDate_to_getSex)
+                    Log.d("liveCfDate", "${viewModel.live_CF.value}")
+                }
             }
 
         }
 
         returnName.setOnClickListener() {
             viewModel.updateCF(3..5)
-            findNavController().navigate(R.id.action_getDate_to_getName)
+            findNavController().popBackStack()
         }
 
     }

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -28,10 +29,23 @@ class Recap : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
+
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
-        var buttonRecap = binding.buttonSurname
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.updateCF(11..15)
+                viewModel.setCity("")
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
+
+
+        val buttonRecap = binding.buttonSurname
 
         binding.liveCFText.text = viewModel.live_CF.value
 

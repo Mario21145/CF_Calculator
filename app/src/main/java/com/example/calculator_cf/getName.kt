@@ -4,16 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.calculator_cf.databinding.FragmentGetNameBinding
-
 
 class getName : Fragment() {
 
@@ -23,12 +21,10 @@ class getName : Fragment() {
     private lateinit var name: String
     private lateinit var name_list: List<Char>
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_name, container, false)
-
+        binding = FragmentGetNameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,16 +36,16 @@ class getName : Fragment() {
 
         name = ""
 
-        view.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
                 Log.d("OnBackPressed", "Back key pressed in Fragment.")
                 viewModel.updateCF(0..2)
                 viewModel.setName("")
-                return@setOnKeyListener true
+                findNavController().popBackStack()
             }
-            return@setOnKeyListener false
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
 
         val button_name = binding.buttonName
         val buttonReturnName = binding.returnSurname
@@ -73,9 +69,7 @@ class getName : Fragment() {
             }
         })
 
-
         button_name.setOnClickListener {
-
             if (name.isEmpty()) {
                 viewModel.showToast(requireContext(), "Il campo nome è vuoto", 30)
             } else {
@@ -84,24 +78,12 @@ class getName : Fragment() {
                 Log.d("liveCfGetName", "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getName_to_getDate)
             }
-
         }
 
-        buttonReturnName.setOnClickListener(){
+        buttonReturnName.setOnClickListener {
             viewModel.updateCF(0..2)
             viewModel.setName("")
-            findNavController().navigate(R.id.action_getName_to_getSurname)
+            findNavController().popBackStack()
         }
-
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            getName().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

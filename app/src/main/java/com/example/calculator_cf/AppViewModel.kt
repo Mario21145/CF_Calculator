@@ -40,7 +40,6 @@ class AppViewModel : ViewModel() {
             }
             convertedLiveCf.removeAll { it == ' ' }
             _liveCF.value = convertedLiveCf.joinToString("")
-
         }
     }
 
@@ -170,7 +169,7 @@ class AppViewModel : ViewModel() {
     }
 
     fun calcDay(day: String): String {
-        if (day.length == 2) {
+        if (day.length == 2 && day < 31.toString()) {
             return day.takeLast(2)
         }
         return ""
@@ -258,17 +257,6 @@ class AppViewModel : ViewModel() {
         }
         return ""
     }
-
-    fun calcSex(sex: String) {
-        if (sex == "uomo") {
-            if(_day.value!! > 31){
-                _day.value = _day.value
-            }
-        } else if (sex == "donna") {
-            _day.value = _day.value!! + 40
-        }
-    }
-
 
     fun calcLastLetter(cf: String?): String {
         if(cf?.length == 15) {

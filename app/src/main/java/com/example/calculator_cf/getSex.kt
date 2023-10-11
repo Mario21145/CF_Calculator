@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -38,16 +39,30 @@ class getSex : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val radioGroup = binding.radioGroup
-        val numberButtons = radioGroup.childCount
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.updateCF(6..8)
+
+                viewModel.setDate("")
+                viewModel.setMonth("")
+                viewModel.setDay(0)
+
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
         var state = false
 
-        var menButtonRadio = binding.men
-        var womenButtonRadio = binding.women
+        val menButtonRadio = binding.men
+        val womenButtonRadio = binding.women
+
+        val radioGroup = binding.radioGroup
+        val numberButtons = radioGroup.childCount
 
         val buttonSex = binding.buttonSex
         val returnDate = binding.returnDate
@@ -108,7 +123,7 @@ class getSex : Fragment() {
             viewModel.setMonth("")
             viewModel.setDay(0)
 
-            findNavController().navigate(R.id.action_getSex_to_getDate)
+            findNavController().popBackStack()
         }
 
 

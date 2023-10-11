@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -35,27 +36,23 @@ class GetSurname : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.appViewModel = AppViewModel()
 
-        Log.d("viewOnViewCreated", "${view}")
-
-
-        view.requestFocus()
-        Log.d("Focus", "${view.hasFocus()}")
-
-        view.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
-                Log.d("OnBackPressed", "Back key pressed in Fragment.")
-                viewModel.updateCF(0..2)
-                viewModel.setName("")
-                binding.editTextSurname.text.clear()
-                return@setOnKeyListener true
-            }
-            return@setOnKeyListener false
-        }
-
+        result = ""
 
         surname = ""
         val button_surname = binding.buttonSurname
         val buttonHome = binding.returnHome
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+                viewModel.reset()
+                viewModel.showToast(requireContext(), "Variabili resettate", 30)
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
 
         binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value)
 
@@ -69,9 +66,8 @@ class GetSurname : Fragment() {
                 val surnameLowerCase = surname.map { it.uppercaseChar() }
                 val surname_list = surnameLowerCase.toList()
                 result = viewModel.calcConsonants(surname_list)
-
                 if (binding.editTextSurname.text.isNotEmpty()) {
-                    binding.LiveCFText.text = getString(R.string.CF_live_Data, result)
+                    binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result)
                 }
             }
 
@@ -93,7 +89,7 @@ class GetSurname : Fragment() {
         buttonHome.setOnClickListener() {
             viewModel.reset()
             viewModel.showToast(requireContext(), "Variabili resettate", 30)
-            findNavController().navigate(R.id.action_getSurname_to_home)
+            findNavController().popBackStack()
         }
     }
 

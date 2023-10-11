@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -32,7 +33,7 @@ class getCity : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_get_city, container, false)
         return binding.root
     }
@@ -44,12 +45,24 @@ class getCity : Fragment() {
         binding.appViewModel = AppViewModel()
 
 
-        var buttonCity = binding.buttonCity
-        var returnSex = binding.ReturnSex
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d("OnBackPressed", "Back key pressed in Fragment.")
+                viewModel.updateCF(9..10)
+
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
+
+        val buttonCity = binding.buttonCity
+        val returnSex = binding.ReturnSex
 
         binding.LiveCFText.text =  viewModel.live_CF.value
 
-        var data = Dataset()
+        val data = Dataset()
 
         val adapter = ArrayAdapter(
             requireContext(),
