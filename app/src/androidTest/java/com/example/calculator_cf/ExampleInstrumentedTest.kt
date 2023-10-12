@@ -1,5 +1,11 @@
 package com.example.calculator_cf
 
+import android.widget.EditText
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -7,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import org.junit.Rule
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,4 +28,26 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.calculator_cf", appContext.packageName)
     }
+
+//    @get:Rule
+//    val activity = ActivityScenarioRule(MainActivity::class.java)
+//
+//    @Test
+//    fun checkHome(): Unit {
+//        var v = AppViewModel()
+//
+//        onView(withId(R.id.editText_Surname)).perform(
+//            typeText("rossi")
+//        )
+//    }
+//
+//    @Test
+//    fun checkSurname(): Unit {
+//        val v = AppViewModel()
+//        val surnameClass = GetSurname()
+//
+//        onView(withId(R.id.editText_Surname)).perform(
+//           typeText("rossi")
+//        )
+//    }
 }
