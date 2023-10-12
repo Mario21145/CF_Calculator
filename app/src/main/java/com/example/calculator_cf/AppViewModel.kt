@@ -258,10 +258,10 @@ class AppViewModel : ViewModel() {
     }
 
     fun calcLastLetter(cf: String): String {
-        if(cf.length == 15) {
+        if (cf.length == 15) {
             var sum = 0
             for ((index, char) in cf.withIndex()) {
-                if (index % 2 == 0) {
+                if ( (index + 1) % 2 == 0) {
                     sum += data.evenValues[char] ?: 0
                 } else {
                     sum += data.oddValues[char] ?: 0
