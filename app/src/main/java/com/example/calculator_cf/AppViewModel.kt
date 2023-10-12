@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.calculator_cf.data.Dataset
+import kotlin.math.absoluteValue
 
 
 class AppViewModel : ViewModel() {
@@ -249,12 +250,15 @@ class AppViewModel : ViewModel() {
             data.cities[4] -> {
                 return "F839"
             }
+            data.cities[5] ->{
+                return "A024"
+            }
         }
         return ""
     }
 
-    fun calcLastLetter(cf: String?): String {
-        if(cf?.length == 15) {
+    fun calcLastLetter(cf: String): String {
+        if(cf.length == 15) {
             var sum = 0
             for ((index, char) in cf.withIndex()) {
                 if (index % 2 == 0) {

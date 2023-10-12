@@ -71,7 +71,7 @@ class getCity : Fragment() {
         )
 
         binding.cities.adapter = adapter
-        binding.cities.setSelection(5)
+        binding.cities.setSelection(6)
         binding.cities.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
@@ -94,7 +94,7 @@ class getCity : Fragment() {
                 viewModel.showToast(requireContext(), "Selezionare il comune", 30)
             } else {
                 viewModel.setCF(resultCity)
-                val resultLastLetter = viewModel.calcLastLetter(viewModel.live_CF.value)
+                val resultLastLetter = viewModel.calcLastLetter(viewModel.live_CF.value!!)
                 viewModel.setCF(resultLastLetter)
                 Log.d("liveCfCity" , "${viewModel.live_CF.value}")
                 findNavController().navigate(R.id.action_getCity_to_recap)
