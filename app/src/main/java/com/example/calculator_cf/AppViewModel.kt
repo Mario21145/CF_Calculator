@@ -46,7 +46,7 @@ class AppViewModel : ViewModel() {
 
     fun setCF(result: String) {
 
-        Log.d("liveCfViewModel", "${live_CF.value}")
+//        Log.d("liveCfViewModel", "${live_CF.value}")
 
         if (_liveCF == MutableLiveData("")) {
             _liveCF.value = result
@@ -61,7 +61,7 @@ class AppViewModel : ViewModel() {
         System.exit(0)
     }
 
-    //Getter & Setter
+    //Setter
 
     private var _surname = MutableLiveData("")
     var surname: LiveData<String> = _surname
@@ -261,7 +261,7 @@ class AppViewModel : ViewModel() {
         if (cf.length == 15) {
             var sum = 0
             for ((index, char) in cf.withIndex()) {
-                if ( (index + 1) % 2 == 0) {
+                if((index + 1) % 2 == 0) {
                     sum += data.evenValues[char] ?: 0
                 } else {
                     sum += data.oddValues[char] ?: 0

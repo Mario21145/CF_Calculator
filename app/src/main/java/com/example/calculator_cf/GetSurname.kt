@@ -20,7 +20,7 @@ class GetSurname : Fragment() {
 
     private val viewModel: AppViewModel by activityViewModels()
     private lateinit var binding: FragmentGetSurnameBinding
-    private lateinit var result: String
+    lateinit var result: String
     private lateinit var surname: String
 
     override fun onCreateView(
@@ -63,9 +63,9 @@ class GetSurname : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 surname = binding.editTextSurname.text.toString()
-                val surnameLowerCase = surname.map { it.uppercaseChar() }
-                val surname_list = surnameLowerCase.toList()
-                result = viewModel.calcConsonants(surname_list)
+                val surnameUpperCase = surname.map { it.uppercaseChar() }
+                val surnameList = surnameUpperCase.toList()
+                result = viewModel.calcConsonants(surnameList)
                 if (binding.editTextSurname.text.isNotEmpty()) {
                     binding.LiveCFText.text = getString(R.string.CF_live_Data, viewModel.live_CF.value + result)
                 }
