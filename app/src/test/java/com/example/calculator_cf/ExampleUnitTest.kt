@@ -93,21 +93,6 @@ class ExampleUnitTest {
         assertEquals("", v.live_CF.value)
     }
 
-
-//    @Test
-//    fun testCalcConsonants(){
-//
-//        val surname = "rossi"
-//        val result = v.calcConsonants(surname.toList())
-//
-//        if(result.isNotEmpty()){
-//            assertEquals("RSS" , result)
-//        } else {
-//            fail("risultato vuoto")
-//        }
-//
-//    }
-
     @Test
     fun testCalcDate(){
         val result = v.calcDate("1999")

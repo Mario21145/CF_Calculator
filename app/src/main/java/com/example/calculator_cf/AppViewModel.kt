@@ -250,7 +250,8 @@ class AppViewModel : ViewModel() {
             data.cities[4] -> {
                 return "F839"
             }
-            data.cities[5] ->{
+
+            data.cities[5] -> {
                 return "A024"
             }
         }
@@ -261,7 +262,7 @@ class AppViewModel : ViewModel() {
         if (cf.length == 15) {
             var sum = 0
             for ((index, char) in cf.withIndex()) {
-                if((index + 1) % 2 == 0) {
+                if ((index + 1) % 2 == 0) {
                     sum += data.evenValues[char] ?: 0
                 } else {
                     sum += data.oddValues[char] ?: 0
@@ -278,35 +279,3 @@ class AppViewModel : ViewModel() {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
