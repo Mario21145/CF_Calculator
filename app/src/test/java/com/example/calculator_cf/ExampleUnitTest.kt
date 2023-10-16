@@ -8,6 +8,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
+import java.util.Locale
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -92,6 +93,14 @@ class ExampleUnitTest {
         v.reset()
         assertEquals("", v.live_CF.value)
     }
+
+    @Test
+    fun testCalcConsonants(){
+        val name = "MARIO".toList()
+        val result = v.calcConsonants(name)
+        assertEquals("MRA" , result)
+    }
+
 
     @Test
     fun testCalcDate(){
