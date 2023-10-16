@@ -119,7 +119,6 @@ class AppViewModel : ViewModel() {
         for (letterName in name) {
             if (data.consonants.contains(letterName)) {
                 c.add(letterName)
-                Log.d("consonants", "$c")
                 if (c.size == 3) {
                     char_result = c
                     break

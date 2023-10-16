@@ -83,20 +83,23 @@ class ExampleInstrumentedTest {
         onView(withId(R.id.Live_CF_Text)).check(matches(withText(containsString("99A01"))))
     }
 
-    //Sex
-//    @Test
-//    fun checkIfResultIsShowed_Sex() {
-//        launchFragmentInContainer<getSex>(themeResId = R.style.Theme_Calculator_CF)
-//        onView(withId(R.id.men)).perform(click())
-//
-//        onView(withId(R.id.men)).check(matches(isChecked())).check(matches(withText(containsString("01"))))
-//        onView(withId(R.id.women)).check(matches(isChecked())).check(matches(withText(containsString("41"))))
-//    }
-
-
 
     @Test
-    fun checkIfResultIsShowed_City(){
+    fun checkIfResultIsShowed_Sex() {
+        launchFragmentInContainer<getSex>(themeResId = R.style.Theme_Calculator_CF)
+
+        onView(withId(R.id.men)).perform(click())
+        onView(withId(R.id.men)).check(matches(isChecked()))
+        onView(withId(R.id.Live_CF_Text)).check(matches(withText(containsString(""))))
+
+        onView(withId(R.id.women)).perform(click())
+        onView(withId(R.id.women)).check(matches(isChecked()))
+        onView(withId(R.id.Live_CF_Text)).check(matches(withText(containsString("40"))))
+
+    }
+
+    @Test
+    fun checkIfResultIsShowed_City() {
         launchFragmentInContainer<getCity>(themeResId = R.style.Theme_Calculator_CF)
         onView(withId(R.id.cities)).perform(click())
         onData(anything()).atPosition(0).perform(click())
@@ -105,47 +108,288 @@ class ExampleInstrumentedTest {
 
 
 
-
-
+    //Navigate on the next fragment
     @Test
     fun navigateFromHomeToSurname() {
+
+        val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        val homeScenario = launchFragmentInContainer<Home>(themeResId = R.style.Theme_Calculator_CF)
+
+        homeScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getSurname)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getSurname)
+    }
+
+    @Test
+    fun navigateFromSurnameToName() {
 
         val navController = TestNavHostController(
             ApplicationProvider.getApplicationContext()
         )
 
-        val homeScenario = launchFragmentInContainer<Home>(
+        val nameScenario = launchFragmentInContainer<GetSurname>(
             themeResId =
             R.style.Theme_Calculator_CF
         )
 
-        homeScenario.onFragment { fragment ->
+        nameScenario.onFragment { fragment ->
             navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getName)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getName)
+    }
+
+    @Test
+    fun navigateFromNameToDate() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getName>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getDate)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getDate)
+    }
+
+    @Test
+    fun navigateFromDateToSex() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getDate>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getSex)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getSex)
+    }
+
+    @Test
+    fun navigateFromSexToCity() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getSex>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getCity)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getCity)
+    }
+
+
+    @Test
+    fun navigateFromCityToRecap() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getCity>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.recap)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.recap)
+    }
+
+    @Test
+    fun navigateFromRecapToHome() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<Recap>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.home)
             Navigation.setViewNavController(fragment.requireView(), navController)
         }
 
         assertEquals(navController.currentDestination?.id, R.id.home)
     }
 
-//    @Test
-//    fun navigateFromSurnameToName() {
-//
-//        val navController = TestNavHostController(
-//            ApplicationProvider.getApplicationContext()
-//        )
-//
-//        val nameScenario = launchFragmentInContainer<GetSurname>(
-//            themeResId =
-//            R.style.Theme_Calculator_CF
-//        )
-//
-//        nameScenario.onFragment { fragment ->
-//            navController.setGraph(R.navigation.navigation_graph)
-//            Navigation.setViewNavController(fragment.requireView(), navController)
-//        }
-//
-//        assertEquals(navController.currentDestination?.id, R.id.getName)
-//    }
+
+
+    //navigate to the previous fragment
+    @Test
+    fun navigateFromRecapToCity() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<Recap>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getCity)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getCity)
+    }
+
+    @Test
+    fun navigateFromCityToSex() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getCity>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getSex)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getSex)
+    }
+
+    @Test
+    fun navigateFromSexToDate() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getCity>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getDate)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getDate)
+    }
+
+    @Test
+    fun navigateFromDateToName() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getDate>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getName)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getName)
+    }
+
+    @Test
+    fun navigateFromNameToSurname() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<getName>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.getSurname)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.getSurname)
+    }
+
+    @Test
+    fun navigateFromSurnameToHome() {
+
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
+
+        val nameScenario = launchFragmentInContainer<GetSurname>(
+            themeResId =
+            R.style.Theme_Calculator_CF
+        )
+
+        nameScenario.onFragment { fragment ->
+            navController.setGraph(R.navigation.navigation_graph)
+            navController.setCurrentDestination(R.id.home)
+            Navigation.setViewNavController(fragment.requireView(), navController)
+        }
+
+        assertEquals(navController.currentDestination?.id, R.id.home)
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
