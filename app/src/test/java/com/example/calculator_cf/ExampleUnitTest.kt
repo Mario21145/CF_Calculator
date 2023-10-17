@@ -17,7 +17,6 @@ import java.util.Locale
  */
 class ExampleUnitTest {
 
-
     private lateinit var v : AppViewModel
 
     @Before
